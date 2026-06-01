@@ -223,12 +223,12 @@
     "id": "emp_20",
     "tienda": "CRA 30",
     "cargo": "AUXILIAR",
-    "nombre": "ANDRES CORREA",
+    "nombre": "JANIER DAVID MOSQUERA",
     "celular": "3138199722",
-    "ini": "",
-    "fin": "",
-    "backup": "",
-    "tipo": "VACACIONES"
+    "ini": "2026-06-01",
+    "fin": "2026-06-05",
+    "backup": "A ESPERA DE RENOVACIÓN CONTRATO",
+    "tipo": "PERMISO"
   },
   {
     "id": "emp_21",
@@ -589,7 +589,7 @@
     "nombre": "ALVARO GUTIERREZ",
     "celular": "",
     "ini": "2026-05-12",
-    "fin": "2026-06-10",
+    "fin": "2026-07-10",
     "backup": "",
     "tipo": "INCAPACIDAD"
   },
