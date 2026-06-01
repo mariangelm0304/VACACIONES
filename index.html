@@ -2105,16 +2105,52 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-loadData();
-refreshAll();
+// Auto-carga desde GitHub al abrir — fuente de verdad compartida
+const GH_RAW = 'https://raw.githubusercontent.com/mariangelm0304/VACACIONES/main/data.json';
+let ghLastHash = null;
 
-setInterval(() => {
-  const now = new Date(); now.setHours(0,0,0,0);
-  if (now.getTime() !== today.getTime()) {
-    today.setTime(now.getTime());
-    refreshAll();
+async function loadFromGitHub(silent) {
+  try {
+    const res = await fetch(GH_RAW + '?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const json = await res.json();
+    if (!Array.isArray(json)) throw new Error('formato inválido');
+    json.forEach(e => { if (!e.tipo) e.tipo = 'VACACIONES'; });
+    data = json;
+    saveData();
+    ghLastHash = JSON.stringify(data);
+    if (!silent) refreshAll();
+    return true;
+  } catch(e) {
+    return false;
   }
-}, 60000);
+}
+
+async function initAndPoll() {
+  const ok = await loadFromGitHub(false);
+  if (!ok) { loadData(); refreshAll(); }
+
+  // Polling cada 30s — si cambia el JSON en GitHub, actualiza automáticamente
+  setInterval(async () => {
+    const res = await loadFromGitHub(true);
+    if (res) {
+      const newHash = JSON.stringify(data);
+      if (newHash !== ghLastHash) {
+        ghLastHash = newHash;
+        refreshAll();
+        showToast('✅ Datos actualizados desde GitHub');
+      }
+    }
+    // Chequeo de cambio de día
+    const now = new Date(); now.setHours(0,0,0,0);
+    if (now.getTime() !== today.getTime()) {
+      today.setTime(now.getTime());
+      refreshAll();
+    }
+  }, 30000);
+}
+
+initAndPoll();
 </script>
 
 </body></html>
