@@ -166,7 +166,7 @@
   },
   {
     "id": "emp_15",
-    "tienda": "CACIQUE/BUCARAMANGA",
+    "tienda": "CACIQUE",
     "cargo": "AUXILIAR",
     "nombre": "CRISTHIAN HINE",
     "celular": "3204839168",
@@ -485,7 +485,7 @@
   },
   {
     "id": "emp_44",
-    "tienda": "BOGOTA NORTE",
+    "tienda": "BOGOTÁ NORTE",
     "cargo": "TÉCNICO",
     "nombre": "JUAN RESTREPO",
     "celular": "",
@@ -590,12 +590,12 @@
     "celular": "",
     "ini": "2026-05-12",
     "fin": "2026-07-09",
-    "backup": "",
+    "backup": "Apoyo vigente hasta Junio 10",
     "tipo": "INCAPACIDAD"
   },
   {
     "id": "emp_55",
-    "tienda": "BOGOTA NORTE",
+    "tienda": "BOGOTÁ NORTE",
     "cargo": "COORDINADOR",
     "nombre": "MIGUEL BUITRAGO",
     "celular": "",
