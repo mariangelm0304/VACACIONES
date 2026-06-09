@@ -735,5 +735,16 @@
     "fin": "",
     "backup": "",
     "tipo": "VACACIONES"
+  },
+  {
+    "tipo": "VACACIONES",
+    "nombre": "MILTON MERCADO",
+    "tienda": "B/QUILLA NORTE",
+    "cargo": "COORDINADOR",
+    "ini": "2026-06-16",
+    "fin": "2026-07-03",
+    "backup": "",
+    "celular": "",
+    "id": "emp_1781012330711"
   }
 ]
