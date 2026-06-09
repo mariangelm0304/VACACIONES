@@ -572,17 +572,6 @@
     "tipo": "VACACIONES"
   },
   {
-    "id": "emp_53",
-    "tienda": "NORTE",
-    "cargo": "COORDINADOR",
-    "nombre": "MILTON MERCADO",
-    "celular": "",
-    "ini": "",
-    "fin": "",
-    "backup": "",
-    "tipo": "VACACIONES"
-  },
-  {
     "id": "emp_54",
     "tienda": "AMERICAS",
     "cargo": "COORDINADOR",
@@ -633,7 +622,7 @@
     "nombre": "ORLANDO FUENTES",
     "celular": "",
     "ini": "2026-07-01",
-    "fin": "2026-07-17",
+    "fin": "2026-07-16",
     "backup": "",
     "tipo": "VACACIONES"
   },
