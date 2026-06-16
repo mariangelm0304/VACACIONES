@@ -226,7 +226,7 @@
     "nombre": "JANIER DAVID MOSQUERA",
     "celular": "3138199722",
     "ini": "2026-06-01",
-    "fin": "2026-06-05",
+    "fin": "2026-06-19",
     "backup": "A ESPERA DE RENOVACIÓN CONTRATO",
     "tipo": "PERMISO"
   },
@@ -632,8 +632,8 @@
     "cargo": "COORDINADOR",
     "nombre": "EFRAIN BARRIOS",
     "celular": "",
-    "ini": "",
-    "fin": "",
+    "ini": "2026-06-20",
+    "fin": "2026-07-08",
     "backup": "",
     "tipo": "VACACIONES"
   },
@@ -643,10 +643,10 @@
     "cargo": "COORDINADOR",
     "nombre": "CAMILO LEON",
     "celular": "",
-    "ini": "2026-03-20",
-    "fin": "2026-04-09",
+    "ini": "2026-06-09",
+    "fin": "2026-06-16",
     "backup": "",
-    "tipo": "VACACIONES"
+    "tipo": "INCAPACIDAD"
   },
   {
     "id": "emp_61",
