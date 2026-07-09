@@ -1,0 +1,2163 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)file:///C:/Users/mmontano/Downloads/dashboard%20este/jamar-vacaciones_2.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jamar — Agenda de Vacaciones</title>
+<link href="file:///C:/Users/mmontano/Downloads/dashboard%20este/Jamar%20%E2%80%94%20Agenda%20de%20Vacaciones_files/css2" rel="stylesheet">
+<style>
+:root {
+  --red: #C8102E;
+  --red-dark: #9B0C22;
+  --red-darker: #7A0A1A;
+  --red-light: #FDEAED;
+  --red-mid: #F0B8C2;
+  --amber: #D97706;
+  --amber-light: #FEF3C7;
+  --green: #16A34A;
+  --green-light: #DCFCE7;
+  --gray-50: #FAFAFA;
+  --gray-100: #F4F4F5;
+  --gray-200: #E4E4E7;
+  --gray-300: #D4D4D8;
+  --gray-400: #A1A1AA;
+  --gray-500: #71717A;
+  --gray-600: #52525B;
+  --gray-700: #3F3F46;
+  --gray-800: #27272A;
+  --gray-900: #18181B;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.08);
+  --shadow-xl: 0 20px 48px rgba(200,16,46,0.15);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #F5F0EC;
+  background-image:
+    radial-gradient(at 0% 0%, rgba(200,16,46,0.05) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(200,16,46,0.04) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--gray-900);
+  min-height: 100vh;
+  padding: 14px;
+  line-height: 1.4;
+  font-size: 13px;
+}
+
+/* ============ HEADER ============ */
+.header {
+  display: flex; align-items: center; gap: 18px;
+  background: linear-gradient(135deg, var(--red) 0%, var(--red-dark) 50%, var(--red-darker) 100%);
+  border-radius: 16px; padding: 18px 22px; margin-bottom: 16px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--shadow-xl);
+}
+.header::after {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 80px, rgba(255,255,255,0.02) 80px, rgba(255,255,255,0.02) 81px);
+  pointer-events: none;
+}
+.logo-img {
+  height: 42px; width: auto;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+  flex-shrink: 0; position: relative; z-index: 2;
+}
+.header-text { position: relative; z-index: 2; flex: 1; }
+.header-text h1 {
+  color: white; font-size: 19px; font-weight: 700; letter-spacing: -0.5px;
+  font-family: 'DM Serif Display', serif;
+}
+.header-text p {
+  color: rgba(255,255,255,0.85); font-size: 12px; margin-top: 2px; font-weight: 300;
+}
+.header-divider {
+  width: 1px; height: 42px; background: rgba(255,255,255,0.25);
+  position: relative; z-index: 2;
+}
+.header-actions { display: flex; gap: 10px; position: relative; z-index: 2; }
+.btn-header {
+  background: rgba(255,255,255,0.15); color: white;
+  border: 1px solid rgba(255,255,255,0.25);
+  padding: 7px 14px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-header:hover { background: rgba(255,255,255,0.25); transform: translateY(-1px); }
+
+/* ============ LAYOUT ============ */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 16px;
+}
+
+@media (max-width: 1100px) {
+  .main-grid { grid-template-columns: 1fr; }
+  .header { flex-wrap: wrap; }
+  .header-divider { display: none; }
+}
+
+/* ============ STATS ============ */
+.stats-row {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 16px;
+}
+.stat-card {
+  background: white; border-radius: 12px; padding: 12px 14px;
+  position: relative; overflow: hidden;
+  border: 1px solid var(--gray-200);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.stat-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+}
+.stat-card.total::before { background: var(--gray-700); }
+.stat-card.red::before { background: var(--red); }
+.stat-card.amber::before { background: var(--amber); }
+.stat-card.green::before { background: var(--green); }
+
+.stat-card .num {
+  font-size: 24px; font-weight: 700;
+  font-family: 'DM Serif Display', serif;
+  letter-spacing: -1px;
+}
+.stat-card.total .num { color: var(--gray-900); }
+.stat-card.red .num { color: var(--red); }
+.stat-card.amber .num { color: var(--amber); }
+.stat-card.green .num { color: var(--green); }
+
+.stat-card .lbl {
+  font-size: 11px; color: var(--gray-500); margin-top: 2px;
+  font-weight: 500; letter-spacing: 0.3px;
+}
+.stat-card .icon {
+  position: absolute; right: 12px; top: 12px; font-size: 18px; opacity: 0.15;
+}
+
+@media (max-width: 700px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+
+/* ============ CALENDAR ============ */
+.calendar-card {
+  background: white; border-radius: 14px; padding: 16px;
+  border: 1px solid var(--gray-200); box-shadow: var(--shadow-md);
+  margin-bottom: 16px;
+}
+.cal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.cal-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px; font-weight: 700;
+  text-transform: capitalize;
+}
+.cal-nav { display: flex; gap: 6px; align-items: center; }
+.cal-btn {
+  width: 28px; height: 28px; border-radius: 8px;
+  border: 1px solid var(--gray-200); background: white;
+  cursor: pointer; font-size: 18px; color: var(--gray-700);
+  transition: all 0.15s;
+  display: flex; align-items: center; justify-content: center;
+}
+.cal-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+.cal-today {
+  padding: 6px 12px; border-radius: 8px; border: 1px solid var(--gray-200);
+  background: white; cursor: pointer; font-size: 13px; font-weight: 500;
+  color: var(--gray-700); margin-right: 4px;
+  font-family: 'DM Sans', sans-serif;
+}
+.cal-today:hover { background: var(--gray-100); }
+
+.cal-weekdays {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 8px;
+}
+.cal-weekday {
+  text-align: center; font-size: 10px; font-weight: 600;
+  color: var(--gray-500); text-transform: uppercase; letter-spacing: 0.6px;
+  padding: 5px 0;
+}
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+}
+.cal-day {
+  min-height: 64px; border-radius: 8px; padding: 4px 6px;
+  background: var(--gray-50); border: 1px solid transparent;
+  cursor: pointer; position: relative; overflow: hidden;
+  transition: all 0.15s; display: flex; flex-direction: column;
+}
+.cal-day:hover { border-color: var(--red); background: white; }
+.cal-day.other-month { opacity: 0.35; }
+.cal-day.today {
+  background: linear-gradient(135deg, var(--red-light), white);
+  border: 2px solid var(--red);
+}
+.cal-day.today .day-num { color: var(--red); font-weight: 700; }
+
+/* SEMAFORO - colored name chips */
+/* === VACACIONES - rojo/amarillo/verde === */
+.day-event.vac-start { background: var(--red); color: white; }
+.day-event.vac-mid { background: var(--red-mid); color: var(--red-darker); }
+.day-event.vac-end { background: var(--red-dark); color: white; }
+.day-event.up-amber { background: var(--amber); color: white; }
+.day-event.up-green { background: var(--green); color: white; }
+.day-event.vac-future { background: var(--gray-200); color: var(--gray-700); }
+.day-event.vac-past { background: var(--gray-100); color: var(--gray-500); text-decoration: line-through; }
+
+/* === PERMISOS - azul/morado/cian === */
+.day-event.perm-start { background: #1E40AF; color: white; }
+.day-event.perm-mid { background: #93C5FD; color: #1E3A8A; }
+.day-event.perm-end { background: #1E3A8A; color: white; }
+.day-event.perm-amber { background: #7C3AED; color: white; }
+.day-event.perm-green { background: #06B6D4; color: white; }
+.day-event.perm-future { background: #DBEAFE; color: #1E40AF; }
+.day-event.perm-past { background: var(--gray-100); color: var(--gray-500); text-decoration: line-through; }
+
+/* === INCAPACIDADES - naranja/rosa/teal === */
+.day-event.inc-start { background: #EA580C; color: white; }
+.day-event.inc-mid { background: #FED7AA; color: #9A3412; }
+.day-event.inc-end { background: #9A3412; color: white; }
+.day-event.inc-amber { background: #DB2777; color: white; }
+.day-event.inc-green { background: #14B8A6; color: white; }
+.day-event.inc-future { background: #FFEDD5; color: #9A3412; }
+.day-event.inc-past { background: var(--gray-100); color: var(--gray-500); text-decoration: line-through; }
+
+/* Tipo pill */
+.tipo-pill {
+  font-size: 9px; padding: 2px 7px; border-radius: 10px;
+  font-weight: 600; white-space: nowrap; letter-spacing: 0.3px;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.tipo-pill.vacaciones { background: #FEE2E2; color: #991B1B; }
+.tipo-pill.permiso { background: #DBEAFE; color: #1E40AF; }
+.tipo-pill.incapacidad { background: #FED7AA; color: #9A3412; }
+.tipo-pill .tipo-dot { width: 6px; height: 6px; border-radius: 50%; }
+.tipo-pill.vacaciones .tipo-dot { background: var(--red); }
+.tipo-pill.permiso .tipo-dot { background: #1E40AF; }
+.tipo-pill.incapacidad .tipo-dot { background: #EA580C; }
+
+/* Badge variants */
+.badge.blue { background: #DBEAFE; color: #1E40AF; }
+.badge.blue .badge-dot { background: #1E40AF; }
+.badge.orange { background: #FED7AA; color: #9A3412; }
+.badge.orange .badge-dot { background: #EA580C; }
+
+/* Alert variants */
+.alert-item.blue {
+  border-left-color: #1E40AF;
+  background: linear-gradient(95deg, #DBEAFE, white 60%);
+}
+.alert-item.blue .alert-time { background: #1E40AF; color: white; }
+.alert-item.orange {
+  border-left-color: #EA580C;
+  background: linear-gradient(95deg, #FED7AA, white 60%);
+}
+.alert-item.orange .alert-time { background: #EA580C; color: white; }
+
+/* Legend dots */
+.dot.blue { background: #1E40AF; }
+.dot.purple { background: #7C3AED; }
+.dot.cyan { background: #06B6D4; }
+.dot.orange { background: #EA580C; }
+.dot.pink { background: #DB2777; }
+.dot.teal { background: #14B8A6; }
+.day-num {
+  font-size: 11px; font-weight: 600; color: var(--gray-700);
+  margin-bottom: 3px;
+}
+.day-events { display: flex; flex-direction: column; gap: 2px; flex: 1; overflow: hidden; }
+.day-event {
+  font-size: 9px; padding: 1px 4px; border-radius: 3px;
+  color: white; font-weight: 500;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  line-height: 1.3;
+}
+.day-event.vac-start { background: var(--red); }
+.day-event.vac-mid { background: var(--red-mid); color: var(--red-darker); }
+.day-event.vac-end { background: var(--red-dark); }
+.day-more {
+  font-size: 9px; color: var(--gray-500); font-weight: 500; padding: 1px 4px;
+}
+
+/* ============ AGENDA TABLE ============ */
+.agenda-card {
+  background: white; border-radius: 14px; padding: 16px;
+  border: 1px solid var(--gray-200); box-shadow: var(--shadow-md);
+}
+.agenda-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px; flex-wrap: wrap; gap: 10px;
+}
+.agenda-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px; font-weight: 700;
+}
+.btn-add {
+  background: var(--red); color: white;
+  border: none; padding: 7px 14px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 6px;
+}
+.btn-add:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+.tip-bar {
+  background: linear-gradient(95deg, #FFF8E6, #FFFCF4);
+  border: 1px solid #FCD34D;
+  border-radius: 10px;
+  padding: 7px 12px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  color: #78350F;
+  display: flex; align-items: center; gap: 10px;
+}
+.tip-bar b { font-weight: 700; }
+
+.filters {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px;
+}
+@media (max-width: 700px) { .filters { grid-template-columns: 1fr 1fr; } }
+.filters select, .filters input {
+  width: 100%; padding: 6px 10px; font-size: 12px;
+  border: 1px solid var(--gray-200); border-radius: 8px;
+  background: white; color: var(--gray-800);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.filters select:focus, .filters input:focus {
+  outline: none; border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(200,16,46,0.1);
+}
+
+.table-wrap { border-radius: 12px; border: 1px solid var(--gray-200); overflow: hidden; }
+.table-scroll { max-height: 460px; overflow-y: auto; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 750px; }
+thead tr {
+  background: linear-gradient(135deg, var(--gray-900), var(--gray-800));
+  position: sticky; top: 0; z-index: 2;
+}
+thead th {
+  color: white; padding: 8px 10px; text-align: left;
+  font-weight: 600; font-size: 10px; letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+tbody tr {
+  border-bottom: 1px solid var(--gray-100);
+  transition: background 0.15s;
+}
+tbody tr:hover { background: var(--gray-50); }
+tbody tr:last-child { border-bottom: none; }
+td { padding: 7px 10px; vertical-align: middle; color: var(--gray-800); }
+
+.row-red { background: rgba(200,16,46,0.04) !important; border-left: 3px solid var(--red); }
+.row-amber { background: rgba(217,119,6,0.04) !important; border-left: 3px solid var(--amber); }
+.row-green { background: rgba(22,163,74,0.04) !important; border-left: 3px solid var(--green); }
+
+/* ============ EDITABLE DATE CELL ============ */
+.date-cell {
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: 5px;
+  border: 1px dashed transparent;
+  transition: all 0.15s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: var(--gray-700);
+  min-height: 28px;
+  user-select: none;
+  font-weight: 500;
+}
+.date-cell:hover {
+  background: var(--red-light);
+  border-color: var(--red);
+  color: var(--red-darker);
+}
+.date-cell::before {
+  content: '✏️';
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.date-cell:hover::before { opacity: 1; }
+.date-cell.empty {
+  color: var(--gray-400);
+  font-style: italic;
+  background: var(--gray-50);
+  border-color: var(--gray-300);
+}
+.date-cell.empty:hover {
+  background: var(--red-light);
+  color: var(--red);
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 16px;
+  font-size: 10px; font-weight: 600; white-space: nowrap;
+}
+.badge.red { background: var(--red-light); color: var(--red-darker); }
+.badge.amber { background: var(--amber-light); color: #92400E; }
+.badge.green { background: var(--green-light); color: #14532D; }
+.badge.gray { background: var(--gray-100); color: var(--gray-600); }
+.badge-dot { width: 7px; height: 7px; border-radius: 50%; }
+.badge.red .badge-dot { background: var(--red); }
+.badge.amber .badge-dot { background: var(--amber); }
+.badge.green .badge-dot { background: var(--green); }
+.badge.gray .badge-dot { background: var(--gray-400); }
+
+.cargo-pill {
+  font-size: 9px; padding: 2px 7px; border-radius: 10px;
+  font-weight: 600; white-space: nowrap; letter-spacing: 0.3px;
+}
+.cargo-pill.coord { background: #DBEAFE; color: #1E40AF; }
+.cargo-pill.tec { background: #EDE9FE; color: #5B21B6; }
+.cargo-pill.aux { background: #D1FAE5; color: #065F46; }
+
+.row-actions { display: flex; gap: 4px; }
+.action-btn {
+  width: 24px; height: 24px; border-radius: 6px;
+  border: 1px solid var(--gray-200); background: white;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: var(--gray-600);
+  transition: all 0.15s;
+}
+.action-btn:hover { background: var(--red); color: white; border-color: var(--red); }
+.action-btn.delete:hover { background: #DC2626; border-color: #DC2626; }
+
+/* ============ DATE EDITOR POPOVER ============ */
+.date-popover {
+  position: fixed;
+  background: white;
+  border-radius: 14px;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid var(--gray-200);
+  padding: 20px;
+  z-index: 150;
+  display: none;
+  min-width: 340px;
+  animation: popIn 0.2s ease-out;
+}
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.date-popover.active { display: block; }
+.popover-header {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px; font-weight: 700;
+  margin-bottom: 4px; color: var(--gray-900);
+}
+.popover-subtitle {
+  font-size: 11px; color: var(--gray-500);
+  margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.popover-form-row {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; margin-bottom: 14px;
+}
+.popover-form-row > div { display: flex; flex-direction: column; }
+.popover-label {
+  font-size: 11px; font-weight: 600;
+  color: var(--gray-600); text-transform: uppercase;
+  letter-spacing: 0.4px; margin-bottom: 4px;
+}
+.popover-input {
+  padding: 9px 12px; font-size: 13px;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  background: white;
+}
+.popover-input:focus {
+  outline: none; border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(200,16,46,0.1);
+}
+.popover-info {
+  background: var(--gray-50); border-radius: 8px;
+  padding: 10px 12px; font-size: 12px;
+  color: var(--gray-600); margin-bottom: 14px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.popover-info b { color: var(--red); font-size: 14px; }
+.popover-actions {
+  display: flex; gap: 8px; justify-content: space-between;
+}
+.popover-actions > div { display: flex; gap: 8px; }
+.btn-pop {
+  padding: 8px 16px; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  cursor: pointer; border: 1px solid transparent;
+  transition: all 0.15s;
+}
+.btn-pop.cancel { background: var(--gray-100); color: var(--gray-700); }
+.btn-pop.cancel:hover { background: var(--gray-200); }
+.btn-pop.clear { background: white; color: var(--red); border-color: var(--red-mid); }
+.btn-pop.clear:hover { background: var(--red-light); }
+.btn-pop.save { background: var(--red); color: white; }
+.btn-pop.save:hover { background: var(--red-dark); }
+
+.popover-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.15);
+  z-index: 140; display: none;
+}
+.popover-backdrop.active { display: block; }
+
+/* ============ ALERTS WIDGET ============ */
+.sidebar { display: flex; flex-direction: column; gap: 20px; }
+.alerts-widget {
+  background: linear-gradient(160deg, white 0%, #FFF9F9 100%);
+  border-radius: 14px; padding: 14px;
+  border: 1px solid var(--gray-200); box-shadow: var(--shadow-md);
+  position: sticky; top: 14px;
+}
+.alerts-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--gray-100);
+}
+.alerts-title {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'DM Serif Display', serif; font-size: 15px; font-weight: 700;
+}
+.bell-icon {
+  width: 30px; height: 30px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  display: flex; align-items: center; justify-content: center;
+  color: white; font-size: 18px;
+  position: relative;
+  animation: bellRing 4s ease-in-out infinite;
+}
+.bell-icon::after {
+  content: ''; position: absolute; top: -2px; right: -2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--amber); border: 2px solid white;
+}
+@keyframes bellRing {
+  0%, 90%, 100% { transform: rotate(0); }
+  92%, 96% { transform: rotate(-10deg); }
+  94%, 98% { transform: rotate(10deg); }
+}
+.alert-counter {
+  background: var(--red); color: white;
+  font-size: 10px; font-weight: 700; padding: 2px 8px;
+  border-radius: 10px;
+}
+.alerts-list {
+  display: flex; flex-direction: column; gap: 8px;
+  max-height: 520px; overflow-y: auto; padding-right: 4px;
+}
+.alerts-list::-webkit-scrollbar { width: 6px; }
+.alerts-list::-webkit-scrollbar-thumb { background: var(--gray-300); border-radius: 3px; }
+.alert-item {
+  padding: 9px 11px; border-radius: 10px;
+  border-left: 4px solid; background: white;
+  border: 1px solid var(--gray-200);
+  position: relative; cursor: pointer;
+  transition: all 0.15s;
+}
+.alert-item:hover { transform: translateX(2px); box-shadow: var(--shadow-sm); }
+.alert-item.red {
+  border-left-color: var(--red);
+  background: linear-gradient(95deg, var(--red-light), white 60%);
+  animation: pulseRed 2s ease-in-out infinite;
+}
+.alert-item.amber {
+  border-left-color: var(--amber);
+  background: linear-gradient(95deg, var(--amber-light), white 60%);
+}
+.alert-item.green {
+  border-left-color: var(--green);
+  background: linear-gradient(95deg, var(--green-light), white 60%);
+}
+@keyframes pulseRed {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200,16,46,0.0); }
+  50% { box-shadow: 0 0 0 6px rgba(200,16,46,0.05); }
+}
+.alert-top {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 8px; margin-bottom: 4px;
+}
+.alert-name {
+  font-weight: 600; font-size: 12px; color: var(--gray-900);
+  line-height: 1.3;
+}
+.alert-time {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.4px;
+  padding: 2px 7px; border-radius: 7px; white-space: nowrap;
+  text-transform: uppercase;
+}
+.alert-item.red .alert-time { background: var(--red); color: white; }
+.alert-item.amber .alert-time { background: var(--amber); color: white; }
+.alert-item.green .alert-time { background: var(--green); color: white; }
+.alert-meta {
+  font-size: 10px; color: var(--gray-600); margin-top: 3px;
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.alert-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.alert-empty {
+  text-align: center; padding: 30px 20px; color: var(--gray-500); font-size: 13px;
+}
+
+/* ============ MODAL ============ */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 100; padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: white; border-radius: 20px; padding: 28px;
+  max-width: 480px; width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: modalIn 0.25s ease-out;
+  max-height: 90vh; overflow-y: auto;
+}
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--gray-100);
+}
+.modal-title {
+  font-family: 'DM Serif Display', serif; font-size: 20px; font-weight: 700;
+}
+.modal-close {
+  width: 32px; height: 32px; border-radius: 8px;
+  border: none; background: var(--gray-100); cursor: pointer;
+  font-size: 18px; color: var(--gray-700);
+}
+.modal-close:hover { background: var(--gray-200); }
+.form-group { margin-bottom: 14px; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-label {
+  display: block; font-size: 12px; font-weight: 600;
+  color: var(--gray-700); margin-bottom: 5px;
+  text-transform: uppercase; letter-spacing: 0.4px;
+}
+.form-input, .form-select {
+  width: 100%; padding: 10px 14px; font-size: 14px;
+  border: 1px solid var(--gray-200); border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  background: white; color: var(--gray-900);
+  transition: all 0.15s;
+}
+.form-input:focus, .form-select:focus {
+  outline: none; border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(200,16,46,0.1);
+}
+.modal-footer {
+  display: flex; gap: 10px; justify-content: flex-end;
+  margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--gray-100);
+}
+.btn-secondary, .btn-primary {
+  padding: 10px 20px; border-radius: 10px;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500;
+  cursor: pointer; transition: all 0.2s; border: none;
+}
+.btn-secondary { background: var(--gray-100); color: var(--gray-700); }
+.btn-secondary:hover { background: var(--gray-200); }
+.btn-primary { background: var(--red); color: white; }
+.btn-primary:hover { background: var(--red-dark); }
+
+/* ============ TOAST ============ */
+.toast {
+  position: fixed; bottom: 30px; right: 30px;
+  background: var(--gray-900); color: white;
+  padding: 14px 20px; border-radius: 12px;
+  font-size: 13px; font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; gap: 10px;
+  transform: translateY(100px); opacity: 0;
+  transition: all 0.3s; z-index: 200;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ============ TODAY BANNER ============ */
+.today-banner {
+  background: linear-gradient(95deg, var(--red), var(--red-dark));
+  color: white; padding: 10px 16px; border-radius: 12px;
+  margin-bottom: 14px; display: flex; align-items: center; gap: 14px;
+  box-shadow: var(--shadow-md); position: relative; overflow: hidden;
+}
+.today-banner::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(135deg, transparent, transparent 30px, rgba(255,255,255,0.04) 30px, rgba(255,255,255,0.04) 31px);
+}
+.today-banner-icon {
+  width: 32px; height: 32px; border-radius: 10px;
+  background: rgba(255,255,255,0.2); display: flex;
+  align-items: center; justify-content: center; font-size: 20px;
+  flex-shrink: 0; position: relative; z-index: 2;
+}
+.today-banner-text { flex: 1; position: relative; z-index: 2; }
+.today-banner-text strong { font-size: 13px; font-weight: 700; }
+.today-banner-text p { font-size: 11px; opacity: 0.9; margin-top: 2px; }
+.today-banner.hidden { display: none; }
+
+.legend-row {
+  display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;
+  font-size: 10px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 5px;
+  background: white; border: 1px solid var(--gray-200);
+  border-radius: 16px; padding: 3px 10px; color: var(--gray-700);
+  font-weight: 500;
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; }
+.dot.red { background: var(--red); }
+.dot.amber { background: var(--amber); }
+.dot.green { background: var(--green); }
+
+.empty-row td { text-align: center; padding: 30px; color: var(--gray-500); font-style: italic; }
+</style>
+<script src="file:///C:/Users/mmontano/Downloads/dashboard%20este/Jamar%20%E2%80%94%20Agenda%20de%20Vacaciones_files/xlsx.full.min.js.descarga"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYQAAABRCAYAAADSOdH7AAABCGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGA8wQAELAYMDLl5JUVB7k4KEZFRCuwPGBiBEAwSk4sLGHADoKpv1yBqL+viUYcLcKakFicD6Q9ArFIEtBxopAiQLZIOYWuA2EkQtg2IXV5SUAJkB4DYRSFBzkB2CpCtkY7ETkJiJxcUgdT3ANk2uTmlyQh3M/Ck5oUGA2kOIJZhKGYIYnBncAL5H6IkfxEDg8VXBgbmCQixpJkMDNtbGRgkbiHEVBYwMPC3MDBsO48QQ4RJQWJRIliIBYiZ0tIYGD4tZ2DgjWRgEL7AwMAVDQsIHG5TALvNnSEfCNMZchhSgSKeDHkMyQx6QJYRgwGDIYMZAKbWPz9HbOBQAAAPIklEQVR42u2dZ7RVxRWAv8sTDBgREcRCEUQiYEONShGUEiAaxV4iNggkEEusRNC4FGtEU9QVa1QkEBeCmiAYFBEQRJMgiKAhSDEERBEEAZH3uPkxYyi+d98tZ8/MOWd/a90ly3fOnj11n2l7Z7LZLJ7oDzSKQM4WoDZwO2HREtgXOBxoDBwKtAVaV/F8ObAYWAEsAd4DPgBeIflkgM62nPYHDrO/BkCzKt75GlgJLAPeAUYCcz3o3gk4CzgFqA/sBexWyXPbgA+BpcAiW7crbJ2/T7qoY/tBA9s/mtn+0QpoWsU7q21df2bLbCowA/iEdNMCaAIcYsebMmArUMP+e1s1728G9gNGA3MyngzCGcC4iGX+EbjcU6UMAIYDDQXTeBN4Cng8IQ35OmAQ0FxA9iwrf6aQ7oOBm4ADIpY7CbjDDnRJ4UTgEqCfYBrldkAbA7ycsAH/EeAg4Cg74It+mPkyCP2BxyKWOQE41ZH+7eyM5BSPDWUWcDrwaUwa9qW23js6TncScB6wvgQZxwG3Ar0d6/4c8EvgoxgNYC2tsbzMsx73AENiaACOtW3Nx9jizSBcA4yIWOZ0u+wgba0HBNiIehHu0tLHmKWgEDgeeLuA528HhgWi+zA7ewiVXsDEAPWaBnQJ3AhcDTwQgB6ZGp4SXi8gc4ugvq8B2UCNwTdfwVng5oB0et/q1DggnWZbnXpU89xf7XPDAtJ9uNUptL2ygVaviYH2jc5Wv6V2phcSN1vdHghFIV8zhBvslC5KZgEdIpRXBizEbNbEjQsxa6o+WEDVG+eh8RvgeWAjZh36cvu1Fgd62w8BX9wU+Iwl57jnOf16wNoQy8WXQRgI/CFimVHuIdwP/IJ4MxU42WF6d2LWuxW37Iv7faQKzCmWOHMwfvZmJgPdQzWUviq1loDMsojk/D0BxgDgJDsddcE4NQbeWI3ZyHVBU9umaiSg3Bbj9sTeqbbsuodcKL4qdpuAzGxEMo5J2ICRRXZTbSXmGLHij0WY452SXIW5B5Ak+gHrHKTTAvhLHAqkhvYlwFyQyyY4f1Nth5b4Ot1Pm08QTANOE5L9Bma/JYnsJdz3a9vZSCxQg2CmcqtSkM+oO3QW2Yt4SuG8CPSJWOYK5I9zh4DULfdNcSoENQgxmcpFxMbAO49SOuMxLjSiYDjR38YOlSOI/hBG7FYd0m4Q3ktZfutg/O6UwqG28yjhsiYCGTWBoSkrtylpNgZpNwg/xDhQSxtjS3x/Bkoc6Fbi+4tSWm7PRCCjZ1wzn2aDMCHFeX+9yPfaAvvoWBsLXi3h3XOo2sts0ukL1C1RxqS4Zj6tBmEc6eYkuyRQKPN1nI0V5xX53nMpL7e3Snh3QJwznkaDcDhuz81/ijnh0xtoj/Htk7G/PTGuMU4CzgZudDjofr/A50/zVF+zMZ4zawF7AGfaAas80Pa1CuOt8ihbxw2t/rM96DKmiHcWONZxLHA90BXj8qTODv1jH8x+VVf75f60I51Kcb3ySJwHR1+uKwYDD0YscyJmX6A6XFwdX4Nx5XB/sfWCWcu8SFDHOyjMeZsrr6WTgPswDgXz7bwLPPejBzH+uTbn8WxDjB+gfvaDQJozgBcKeN7FgPAmxh36v4t8/1hM/BPJPcBi/B3dB1wbZ3uQRoMgneETiXbj9W47c4iaBZg9gZAGiuYYr5TFsBQ/694dKT4Qz2jgfGH9Crmb0MEO1lJsoPT1eVftsjUmqh2B9RFRg7AbSpTUwoSvi5IhmHPlP4lYbpvAyu6wEowBmKhSrmMvnEtpUdkuwCx9Sc4EC6lnyWXBZbaOJL7kJQbi0wo0CGWe+s0GTMjdFWxfRi3HbAfUBr6s5v3d7cx2BlQe+zXJdBOULelSd4D9+v2Bp3JrJyz/aKKJK9zELkMc7KBMzsa4zi6Vvhj3CT8S0rMQ9+0/FdLhWZtPyb4XtVHoCdxbwPP3OGhz5cCvMW5KRE4ypW1TuY+QXBe3OXsJyGwQwGzieGBOhPJceP4cF5Ex2PFrdEkA/WMvIbl9Heg+MmJ5XQt8XnrvYAzmZOBNCB5rTZtBOE9I7koHuktMi8/M87kOgvl6W0Cm9B2TKwVkdk1on3vYUTovJnjcGo9ZXhQnbQZBwhnbsw71Xx2xvKZ5PicV8HukkNzbhOthhYDMpYL6nuDxY2mwo77xPP7oIyj7rgI+3NQgFEBNIblXOMzDvIjl5RuHWur0zsUxmnV8wy2Csh8TkpvPZvG5KKG14ymYJSJnpMkgSG2YrXOYh+7a9/JmesxmNeA32LrEV6jLKHpNPJbd94Tk3uo6I2kyCBsEZKbZH1KpTBOW/5qQ3KWCOi/0WB8SN79dupa/wWPZSR26mO46I2k6dvoU5o7AzzAnOpoBn+RhFMsx9wDWY463VWCWn2rg1p3DwITVxzxh+UtQCqEmMAoTM6O5nfnuQfW3r8vtuxX2+TLbr94hmqPE+fJzneGqQSiUUfYXN67DnD9OEgtiLj+J/Dimeicx/O0QNQhKVQNb6wTmS/qo7tKYlssa1MV4vjQBlnvWYX8huTN9ZEZDaIZHfYyTrKz9tU5oPjPC8r+Kabls1C6QkzMwIVyzARgDKNxrcNDoDMEfR2LCUfYGOuHG3UKaiOvHTgOtOmoDXTAuTU7GuIcPdaxqoQZByZfDgUF28G+vxbETm9QgVMqXmJgASe/nBwLHYC6utcGtU8IoqSMgc5UahPhyDiaIRxeMK2RdhlMUQ0NM3Ic2QGeSGZaztoDMtWoQ4kEjoD/GFXUzLQ5F2YkudkacplvP9QRkrvSVGTUI1dMDEwKzjRaFonyLezEhMNOKhEH4WA1CeLyEnI96RYkzrTAuy+toUYiEQf2Pr8zoevfO9GL7cU81BoqyM6Nt3/hQjcH/qSUg83OdIfhnHXIBQhQlzpwDPKfFUCkS92k2+8qMzhDM0besGgNFqZRX1Bg4Z6uvhH3NECQs4LYi3hmHufmYVrZo31OqoC7whRaDF2r6StjXDGH3AAxCNuXGAIx3SkXZlTvVGKQTXwZhb8/TrKxWPQD/0iJQdqETbgPbKGoQaCQgM19XCONiVD8LMZd8MsAIAfl6uU7Zlekx0fMLTMjRWsg7SkwNvvYQJMLdrc/TEIW4TLQNeBWYjInCVlnkLIkr8tqRlB15IVC9lgFvAhPtB90mrapkGYSmAjLz8f+xymNZL7CD/lz7+0eB70sYhArtAorlUOB0j+lPtb+5wGw8um9Qg+AeiSWjL6v5+yMO87fBfsk8DbwekUyJk1l67Fj5BpfxnOdhXF5Mw6ObBiUcgyBx5j/XgJkBBjjI15+IVxjCMu0CCvCko3SOxri8UNQg7ISE/4+vc/ztXQd5Oh3j/0iK2tpclSKp7njxZcLpbwS+q9UQPklaMsh1hPIIwXS/sjOQl4TzV1Obq1IkuS4gSg/Ut6gx0BmCj4Ftqoe8jAQuDqBTK0oucp3KOVN4fNGDC2oQcvIrIbmuG15HYKbD9Gppc1WKJNelzZ4C6a0F6muxxw8fS0ZDHafXSUDmeMfGAKCbNldFoJ/3FkhPjYEaBK9syPG3swTSm+khjwdoc1WKJNcy7d4JyN81WsXxNAh3C8mdluNvZyfAIJyoTVXRD78quUWrOJ4N5UYhufNz/K1xAgzCZdpUlRIor+L/txBIa5GH/GkskxgaBEkPo0Mcl5vrOwFSBmGrdoFUUOFw9tzccd46aPXGyyA0JXnupl9ymJbkZrJedkt3P5eIeeD65OLjWr3xMAj1gCswngolmeqh3Lo7SqcdxiGeFBu1C6SCqjaV5wqlN9xRvuYArbV6o7fmdTDuJLZiXDHvbv+7EfhOHkalAXAccD4yx9hycWc1f/8vMid0rgHuF8zXYOBBR/WvpKOf78pbQukNBYYJ52lzHmOTUkRDiftyzuRq/j4FuEgg3RGYGAwSU9abgdu0eSoxJotcvA2NeChE3I+jLcnjmTcE038s4ulxO9vY1RgoSTEKUfKQGgM1CLk4JY9nJgjrMNQ20odKkDHKyvin4/I7SLtA6pEOmZnF7FWcUOT7vYDPrZxBWl2yxHkNeQ35BfVwFXlpkP19ivEvv94O8O+zPQhIPaAlcAjGpUZn4DCPZai3n/XDbw7yFx+PAGbZf08BZtjZ/VxgMdvD37YEWmFC7PbEuJT3+dFal/xC86pBCIAGBRqPfRzp1RC5C3hRsMEaqFlAfx0rU0F5jr9dBVzpUJeu9hcqizEb1r9PmzGIs0Eo9ChmS/KLuZxEnrAzlpkoSuVMCXyQlmI58ChwhzaBeBuEHgU+vw6YhFmPTANjgAu0eSt50o10bdZeCIzWav82cdxU7lfke71TUJ/XY476qTFQCuWehOdvG+YSW0aNQXIMwm2UFhD80YTW43jb0O/TJq0UyZAE5609UAZ8oNWcHIPwBKVHWxuYwDrsjmwYRCU9tE9gnjLI3chWg+CJqUR3IiaTsMb+mjZjJSLeAi5JSF6eTlhfV4NgmQ+cLDCQxpnfaWNXhHgGGVcvLukKXKpVWTihnzLqR2l7BtUZhTierDgKOS+VLqkpLH9DjGd9UbOlwOdHAauBv8Ws7BYAbR2nKeFgz9u4HOoM4VnbMZ6MYeeTYrrVNwnGwAUNYqr3ukCM72SgTYzK7XwPxgBk7jftqQZhO/sCfR1/kY0IvLH3wri5SBIai8HdYFCryPcW2v6xPODyWmV1/LOn9CXcv6xRg2DCRGYwvoBcc51Ne0Jgjf1Fq9crCRz4pNteXN0ObA5Qp2bI+zsqlG2YDfD9PeuxREBmRRoNwjy2X6TKAE8F0MhOtV9TazzqsNrOCDJAH/1gLpqymOpdP9CymGHb5NWey2eS7aNlmA1w30gsTdZNi0EYi1mXzABHEuZFqq22ko9G3jXwjjxhy6VRQmcErqmIqd7zBWSui1DWb207vRZ3y35rMZ4GMva/WxM+o/vMV2Yy2Wx2IyaEZrFsshn4CHMT8APgQ2Cp/f+fEX8aYgLhDIjYOI4FxgXWwCtjOCbuQ1Qst8sQ0swAOkYo71pkw6ZiZ4XjI55xthXuhz2Au4BjIjQADwMvE75TxiOBdyOur/3wdAIyk81qAKIi6IU5/tkK40m1OdB4l2e+xriZXowJ8DHHGoCPtPiUBHMgJnBVC+Bg2z+aAXtXMugvs31kCTANeF6Lzy9qEBRFURQA/gdTpbT/r17fIAAAAABJRU5ErkJggg==" alt="Jamar" class="logo-img">
+  <div class="header-divider"></div>
+  <div class="header-text">
+    <h1>Agenda de Vacaciones</h1>
+    <p>Coordinadores · Técnicos de Calidad · Auxiliares de Piso</p>
+  </div>
+  <div class="header-actions">
+    <button class="btn-header" onclick="exportData()">📥 Exportar</button>
+    <button class="btn-header" onclick="importData()">📤 Importar</button>
+  </div>
+</div>
+
+<!-- TODAY BANNER -->
+<div class="today-banner" id="today-banner">
+  <div class="today-banner-icon">🌴</div>
+  <div class="today-banner-text">
+    <strong id="today-banner-title">4 personas con novedad hoy (3 vac. · 1 incap.)</strong>
+    <p id="today-banner-detail">🌴 HENRY VERGARA (4 VIENTOS) · 🏥 ALVARO GUTIERREZ (AMERICAS) · 🌴 OSCAR RODRIGUEZ (FABRICATO) · 🌴 JESUS ORTIZ (SANTA MARTA)</p>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-row">
+  <div class="stat-card total">
+    <div class="num" id="s-total">68</div>
+    <div class="lbl">Total empleados</div>
+    <div class="icon">👥</div>
+  </div>
+  <div class="stat-card red">
+    <div class="num" id="s-red">4</div>
+    <div class="lbl">En vacaciones hoy</div>
+    <div class="icon">🌴</div>
+  </div>
+  <div class="stat-card amber">
+    <div class="num" id="s-amber">0</div>
+    <div class="lbl">Próximos &lt; 5 días</div>
+    <div class="icon">⚠️</div>
+  </div>
+  <div class="stat-card green">
+    <div class="num" id="s-green">0</div>
+    <div class="lbl">En 6 – 10 días</div>
+    <div class="icon">📅</div>
+  </div>
+</div>
+
+<div class="legend-row" style="flex-wrap:wrap;">
+  <strong style="font-size:10px; color:var(--gray-700); align-self:center; margin-right:4px;">🌴 VACACIONES:</strong>
+  <div class="legend-item"><div class="dot red"></div> En curso</div>
+  <div class="legend-item"><div class="dot amber"></div> &lt;5d</div>
+  <div class="legend-item"><div class="dot green"></div> 6–10d</div>
+  <strong style="font-size:10px; color:var(--gray-700); align-self:center; margin-left:8px; margin-right:4px;">📝 PERMISOS:</strong>
+  <div class="legend-item"><div class="dot blue"></div> En curso</div>
+  <div class="legend-item"><div class="dot purple"></div> &lt;5d</div>
+  <div class="legend-item"><div class="dot cyan"></div> 6–10d</div>
+  <strong style="font-size:10px; color:var(--gray-700); align-self:center; margin-left:8px; margin-right:4px;">🏥 INCAPACIDADES:</strong>
+  <div class="legend-item"><div class="dot orange"></div> En curso</div>
+  <div class="legend-item"><div class="dot pink"></div> &lt;5d</div>
+  <div class="legend-item"><div class="dot teal"></div> 6–10d</div>
+  <span style="margin-left:auto; color:var(--gray-500); align-self:center;">📆 Hoy: <b id="today-lbl">viernes, 15 de mayo de 2026</b></span>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+  <div>
+    <!-- CALENDAR -->
+    <div class="calendar-card">
+      <div class="cal-header">
+        <div class="cal-title" id="cal-title">mayo de 2026</div>
+        <div class="cal-nav">
+          <button class="cal-today" onclick="goToToday()">Hoy</button>
+          <button class="cal-btn" onclick="prevMonth()">‹</button>
+          <button class="cal-btn" onclick="nextMonth()">›</button>
+        </div>
+      </div>
+      <div class="cal-weekdays">
+        <div class="cal-weekday">Lun</div>
+        <div class="cal-weekday">Mar</div>
+        <div class="cal-weekday">Mié</div>
+        <div class="cal-weekday">Jue</div>
+        <div class="cal-weekday">Vie</div>
+        <div class="cal-weekday">Sáb</div>
+        <div class="cal-weekday">Dom</div>
+      </div>
+      <div class="cal-grid" id="cal-grid"><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-04-27T05:00:00.000Z&#39;)">
+      <div class="day-num">27</div>
+      <div class="day-events"><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-04-28T05:00:00.000Z&#39;)">
+      <div class="day-num">28</div>
+      <div class="day-events"><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-04-29T05:00:00.000Z&#39;)">
+      <div class="day-num">29</div>
+      <div class="day-events"><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-04-30T05:00:00.000Z&#39;)">
+      <div class="day-num">30</div>
+      <div class="day-events"><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-01T05:00:00.000Z&#39;)">
+      <div class="day-num">1</div>
+      <div class="day-events"><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-02T05:00:00.000Z&#39;)">
+      <div class="day-num">2</div>
+      <div class="day-events"><div class="day-event vac-start" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">▶ OSCAR</div><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-03T05:00:00.000Z&#39;)">
+      <div class="day-num">3</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-04T05:00:00.000Z&#39;)">
+      <div class="day-num">4</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-05T05:00:00.000Z&#39;)">
+      <div class="day-num">5</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-06T05:00:00.000Z&#39;)">
+      <div class="day-num">6</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">YORLAN</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-07T05:00:00.000Z&#39;)">
+      <div class="day-num">7</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-event vac-past" title="🌴 VACACIONES — YORLAN CARMONA — SINCELEJO (20 de abr de 2026 → 07 de may de 2026)">■ YORLAN</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-08T05:00:00.000Z&#39;)">
+      <div class="day-num">8</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-09T05:00:00.000Z&#39;)">
+      <div class="day-num">9</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-10T05:00:00.000Z&#39;)">
+      <div class="day-num">10</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-11T05:00:00.000Z&#39;)">
+      <div class="day-num">11</div>
+      <div class="day-events"><div class="day-event vac-start" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">▶ HENRY</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-12T05:00:00.000Z&#39;)">
+      <div class="day-num">12</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-start" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">▶ ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-13T05:00:00.000Z&#39;)">
+      <div class="day-num">13</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-14T05:00:00.000Z&#39;)">
+      <div class="day-num">14</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div></div>
+    </div><div class="cal-day today" onclick="openDayDetails(&#39;2026-05-15T05:00:00.000Z&#39;)">
+      <div class="day-num">15</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-more">+1 más</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-16T05:00:00.000Z&#39;)">
+      <div class="day-num">16</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-more">+1 más</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-17T05:00:00.000Z&#39;)">
+      <div class="day-num">17</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-more">+1 más</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-18T05:00:00.000Z&#39;)">
+      <div class="day-num">18</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-more">+1 más</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-19T05:00:00.000Z&#39;)">
+      <div class="day-num">19</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-more">+1 más</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-20T05:00:00.000Z&#39;)">
+      <div class="day-num">20</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">OSCAR</div><div class="day-more">+1 más</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-21T05:00:00.000Z&#39;)">
+      <div class="day-num">21</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-end" title="🌴 VACACIONES — OSCAR RODRIGUEZ — FABRICATO (02 de may de 2026 → 21 de may de 2026)">■ OSCAR</div><div class="day-more">+1 más</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-22T05:00:00.000Z&#39;)">
+      <div class="day-num">22</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-23T05:00:00.000Z&#39;)">
+      <div class="day-num">23</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-24T05:00:00.000Z&#39;)">
+      <div class="day-num">24</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-25T05:00:00.000Z&#39;)">
+      <div class="day-num">25</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-26T05:00:00.000Z&#39;)">
+      <div class="day-num">26</div>
+      <div class="day-events"><div class="day-event vac-mid" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-27T05:00:00.000Z&#39;)">
+      <div class="day-num">27</div>
+      <div class="day-events"><div class="day-event vac-end" title="🌴 VACACIONES — HENRY VERGARA — 4 VIENTOS (11 de may de 2026 → 27 de may de 2026)">■ HENRY</div><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-28T05:00:00.000Z&#39;)">
+      <div class="day-num">28</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-29T05:00:00.000Z&#39;)">
+      <div class="day-num">29</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-30T05:00:00.000Z&#39;)">
+      <div class="day-num">30</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day" onclick="openDayDetails(&#39;2026-05-31T05:00:00.000Z&#39;)">
+      <div class="day-num">31</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-06-01T05:00:00.000Z&#39;)">
+      <div class="day-num">1</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-mid" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">JESUS</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-06-02T05:00:00.000Z&#39;)">
+      <div class="day-num">2</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div><div class="day-event vac-end" title="🌴 VACACIONES — JESUS ORTIZ — SANTA MARTA (15 de may de 2026 → 02 de jun de 2026)">■ JESUS</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-06-03T05:00:00.000Z&#39;)">
+      <div class="day-num">3</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-06-04T05:00:00.000Z&#39;)">
+      <div class="day-num">4</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-06-05T05:00:00.000Z&#39;)">
+      <div class="day-num">5</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-06-06T05:00:00.000Z&#39;)">
+      <div class="day-num">6</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div></div>
+    </div><div class="cal-day other-month" onclick="openDayDetails(&#39;2026-06-07T05:00:00.000Z&#39;)">
+      <div class="day-num">7</div>
+      <div class="day-events"><div class="day-event inc-mid" title="🏥 INCAPACIDAD — ALVARO GUTIERREZ — AMERICAS (12 de may de 2026 → 10 de jun de 2026)">ALVARO</div></div>
+    </div></div>
+    </div>
+
+    <!-- AGENDA TABLE -->
+    <div class="agenda-card">
+      <div class="agenda-header">
+        <div class="agenda-title">Agenda completa</div>
+        <button class="btn-add" onclick="openModal()">+ Agregar empleado</button>
+      </div>
+
+      <div class="tip-bar">
+        💡 <span><b>Novedades:</b> 🌴 <b>Vacaciones</b> = rojo/amarillo/verde · 📝 <b>Permisos</b> = azul/morado/cian · 🏥 <b>Incapacidades</b> = naranja/rosa/teal. Usa el filtro <b>"Tipo"</b> arriba. Clic sobre fechas para edición rápida con cambio de tipo.</span>
+      </div>
+
+      <div class="filters">
+        <select id="fil-tipo">
+          <option value="">📋 Todas las novedades</option>
+          <option value="VACACIONES">🌴 Solo Vacaciones</option>
+          <option value="PERMISO">📝 Solo Permisos</option>
+          <option value="INCAPACIDAD">🏥 Solo Incapacidades</option>
+        </select>
+        <select id="fil-cargo"><option value="">Todos los cargos</option><option value="AUXILIAR">Auxiliar</option><option value="COORDINADOR">Coordinador</option><option value="TÉCNICO">Técnico</option></select>
+        <select id="fil-tienda"><option value="">Todas las tiendas</option><option value="4 VIENTOS">4 VIENTOS</option><option value="AMERICAS">AMERICAS</option><option value="B/QUILLA NORTE">B/QUILLA NORTE</option><option value="BOGOTA NORTE">BOGOTA NORTE</option><option value="CACIQUE">CACIQUE</option><option value="CRA 30">CRA 30</option><option value="EDEN">EDEN</option><option value="FABRICATO">FABRICATO</option><option value="FLORIDA">FLORIDA</option><option value="HIPER">HIPER</option><option value="HIPER JAMAR">HIPER JAMAR</option><option value="MAYORCA">MAYORCA</option><option value="METROPOLITANO">METROPOLITANO</option><option value="MOLINOS">MOLINOS</option><option value="MONTERIA">MONTERIA</option><option value="NORTE">NORTE</option><option value="PLAZUELA">PLAZUELA</option><option value="PRINCIPAL">PRINCIPAL</option><option value="RIOHACHA">RIOHACHA</option><option value="SAN FELIPE">SAN FELIPE</option><option value="SANTA MARTA">SANTA MARTA</option><option value="SINCELEJO">SINCELEJO</option><option value="SUBA">SUBA</option><option value="TRINITARIAS">TRINITARIAS</option><option value="VALLEDUPAR">VALLEDUPAR</option></select>
+        <select id="fil-estado">
+          <option value="">Todos los estados</option>
+          <option value="red">🔴 En curso</option>
+          <option value="amber">🟡 Próximos &lt;5d</option>
+          <option value="green">🟢 En 6-10d</option>
+          <option value="future">📅 Programadas</option>
+          <option value="past">✓ Completadas</option>
+          <option value="none">⊘ Sin fechas</option>
+        </select>
+        <input type="text" id="fil-search" placeholder="🔍 Buscar nombre…">
+      </div>
+
+      <div class="table-wrap">
+        <div class="table-scroll">
+          <table id="main-table">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Tienda</th>
+                <th>Cargo</th>
+                <th>Nombre</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Días</th>
+                <th>Estado</th>
+                <th>Backup</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tbody"><tr class="empty-row"><td colspan="10">No hay resultados para los filtros seleccionados</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALERTS SIDEBAR -->
+  <div class="sidebar">
+    <div class="alerts-widget">
+      <div class="alerts-header">
+        <div class="alerts-title">
+          <div class="bell-icon">🔔</div>
+          Alertas
+        </div>
+        <div class="alert-counter" id="alert-counter">4</div>
+      </div>
+      <div class="alerts-list" id="alerts-list"><div class="alert-item red">
+      <div class="alert-top">
+        <div>
+          <div class="alert-name">HENRY VERGARA</div>
+          <div style="font-size:10px; color:var(--gray-500); margin-top:2px; font-weight:600; letter-spacing:0.3px;">🌴 EN VACACIONES</div>
+        </div>
+        <div class="alert-time">Faltan 12d</div>
+      </div>
+      <div class="alert-meta">
+        <span>🏢 4 VIENTOS</span>
+        <span>👤 Coordinador</span>
+        <span class="tipo-pill vacaciones"><span class="tipo-dot"></span>🌴 Vacación</span>
+      </div>
+      <div class="alert-meta">
+        <span>📆 11 de may de 2026 → 27 de may de 2026</span>
+      </div>
+      
+    </div><div class="alert-item orange">
+      <div class="alert-top">
+        <div>
+          <div class="alert-name">ALVARO GUTIERREZ</div>
+          <div style="font-size:10px; color:var(--gray-500); margin-top:2px; font-weight:600; letter-spacing:0.3px;">🏥 EN INCAPACIDAD</div>
+        </div>
+        <div class="alert-time">Faltan 26d</div>
+      </div>
+      <div class="alert-meta">
+        <span>🏢 AMERICAS</span>
+        <span>👤 Coordinador</span>
+        <span class="tipo-pill incapacidad"><span class="tipo-dot"></span>🏥 Incapacidad</span>
+      </div>
+      <div class="alert-meta">
+        <span>📆 12 de may de 2026 → 10 de jun de 2026</span>
+      </div>
+      <div class="alert-meta"><span style="color:var(--gray-500)">🔄 Backup: INCAPACIDAD</span></div>
+    </div><div class="alert-item red">
+      <div class="alert-top">
+        <div>
+          <div class="alert-name">OSCAR RODRIGUEZ</div>
+          <div style="font-size:10px; color:var(--gray-500); margin-top:2px; font-weight:600; letter-spacing:0.3px;">🌴 EN VACACIONES</div>
+        </div>
+        <div class="alert-time">Faltan 6d</div>
+      </div>
+      <div class="alert-meta">
+        <span>🏢 FABRICATO</span>
+        <span>👤 Coordinador</span>
+        <span class="tipo-pill vacaciones"><span class="tipo-dot"></span>🌴 Vacación</span>
+      </div>
+      <div class="alert-meta">
+        <span>📆 02 de may de 2026 → 21 de may de 2026</span>
+      </div>
+      
+    </div><div class="alert-item red">
+      <div class="alert-top">
+        <div>
+          <div class="alert-name">JESUS ORTIZ</div>
+          <div style="font-size:10px; color:var(--gray-500); margin-top:2px; font-weight:600; letter-spacing:0.3px;">🌴 EN VACACIONES</div>
+        </div>
+        <div class="alert-time">Faltan 18d</div>
+      </div>
+      <div class="alert-meta">
+        <span>🏢 SANTA MARTA</span>
+        <span>👤 Coordinador</span>
+        <span class="tipo-pill vacaciones"><span class="tipo-dot"></span>🌴 Vacación</span>
+      </div>
+      <div class="alert-meta">
+        <span>📆 15 de may de 2026 → 02 de jun de 2026</span>
+      </div>
+      <div class="alert-meta"><span style="color:var(--gray-500)">🔄 Backup: Jair Reyes</span></div>
+    </div></div>
+    </div>
+  </div>
+</div>
+
+<!-- DATE EDITOR POPOVER -->
+<div class="popover-backdrop" id="pop-backdrop" onclick="closePopover()"></div>
+<div class="date-popover" id="date-popover">
+  <div class="popover-header" id="pop-name">—</div>
+  <div class="popover-subtitle" id="pop-meta">—</div>
+  <div style="margin-bottom: 12px;">
+    <label class="popover-label">Tipo de novedad</label>
+    <select class="popover-input" id="pop-tipo" style="width:100%;">
+      <option value="VACACIONES">🌴 Vacaciones</option>
+      <option value="PERMISO">📝 Permiso</option>
+      <option value="INCAPACIDAD">🏥 Incapacidad</option>
+    </select>
+  </div>
+  <div class="popover-form-row">
+    <div>
+      <label class="popover-label">Fecha inicio</label>
+      <input type="date" class="popover-input" id="pop-ini">
+    </div>
+    <div>
+      <label class="popover-label">Fecha fin</label>
+      <input type="date" class="popover-input" id="pop-fin">
+    </div>
+  </div>
+  <div class="popover-info">
+    <span>Días:</span>
+    <b id="pop-days">—</b>
+  </div>
+  <div class="popover-actions">
+    <div>
+      <button class="btn-pop clear" onclick="clearDatesInPopover()">🗑️ Limpiar</button>
+    </div>
+    <div>
+      <button class="btn-pop cancel" onclick="closePopover()">Cancelar</button>
+      <button class="btn-pop save" onclick="saveDatesFromPopover()">✓ Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">Editar empleado</div>
+      <button class="modal-close" onclick="closeModal()">×</button>
+    </div>
+    <form id="emp-form" onsubmit="saveEmployee(event)">
+      <input type="hidden" id="f-id" value="emp_52">
+      <div class="form-group">
+        <label class="form-label">Tipo de novedad *</label>
+        <select class="form-select" id="f-tipo" required="">
+          <option value="VACACIONES">🌴 Vacaciones</option>
+          <option value="PERMISO">📝 Permiso</option>
+          <option value="INCAPACIDAD">🏥 Incapacidad</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Nombre *</label>
+        <input type="text" class="form-input" id="f-nombre" required="">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Tienda *</label>
+          <input type="text" class="form-input" id="f-tienda" required="" list="tiendas-list">
+          <datalist id="tiendas-list"><option value="4 VIENTOS"></option><option value="AMERICAS"></option><option value="B/QUILLA NORTE"></option><option value="BOGOTA NORTE"></option><option value="CACIQUE"></option><option value="CRA 30"></option><option value="EDEN"></option><option value="FABRICATO"></option><option value="FLORIDA"></option><option value="HIPER"></option><option value="HIPER JAMAR"></option><option value="MAYORCA"></option><option value="METROPOLITANO"></option><option value="MOLINOS"></option><option value="MONTERIA"></option><option value="NORTE"></option><option value="PLAZUELA"></option><option value="PRINCIPAL"></option><option value="RIOHACHA"></option><option value="SAN FELIPE"></option><option value="SANTA MARTA"></option><option value="SINCELEJO"></option><option value="SUBA"></option><option value="TRINITARIAS"></option><option value="VALLEDUPAR"></option></datalist>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cargo *</label>
+          <select class="form-select" id="f-cargo" required="">
+            <option value="COORDINADOR">Coordinador Logístico</option>
+            <option value="TÉCNICO">Técnico de Calidad</option>
+            <option value="AUXILIAR">Auxiliar de Piso</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Fecha inicio</label>
+          <input type="date" class="form-input" id="f-ini">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fecha fin</label>
+          <input type="date" class="form-input" id="f-fin">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Backup / Reemplazo</label>
+        <input type="text" class="form-input" id="f-backup">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Celular</label>
+        <input type="text" class="form-input" id="f-cel">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+        <button type="submit" class="btn-primary">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast">✓ Empleado actualizado</div>
+
+<script>
+// ============ INITIAL DATA ============
+const DEFAULT_DATA = [
+  ["B/QUILLA NORTE","AUXILIAR","JUAN DAVID HERAZO","3105998416","","",""],
+  ["B/QUILLA NORTE","AUXILIAR","ALFREDO BARRIOS","3126709022","","",""],
+  ["TRINITARIAS","AUXILIAR","JOSE MELENDEZ","3008336026","","",""],
+  ["B/QUILLA PRINCIPAL","AUXILIAR","SAMUEL SANCHEZ","3024403613","","",""],
+  ["SAN FELIPE","AUXILIAR","ALEJANDRO VELASQUEZ","3234349797","","",""],
+  ["SAN FELIPE","AUXILIAR","FRANCISCO MACHACON","3126210600","","",""],
+  ["4 VIENTOS","AUXILIAR","ORANGEL DE AVILA","3124178588","","",""],
+  ["MONTERIA","AUXILIAR","ANGEL PEREZ","3215038318","","",""],
+  ["VALLEDUPAR","AUXILIAR","EDWUAR FLOREZ","3215710031","","",""],
+  ["FABRICATO","AUXILIAR","JUAN CASTAÑO","3054335052","","",""],
+  ["MOLINOS","AUXILIAR","SAUL HENAO","3136803048","","",""],
+  ["FLORIDA","AUXILIAR","YHON HERANO","3108820660","","",""],
+  ["SANTA MARTA","AUXILIAR","JUAN LANUZA","3001117642","","",""],
+  ["MAYORCA","AUXILIAR","HUGO ALZATE","3008738988","","",""],
+  ["MAYORCA","AUXILIAR","JUAN GALLEGO","3013357794","","",""],
+  ["CACIQUE/BUCARAMANGA","AUXILIAR","CRISTHIAN HINE","3204839168","","",""],
+  ["BOGOTÁ/AMERICAS","AUXILIAR","DIEGO POVEDA","3134212793","","",""],
+  ["SUBA","AUXILIAR","CARLOS OSORIO","3133142897","","",""],
+  ["SINCELEJO","AUXILIAR","JEISON SANEZ","3002232274","","",""],
+  ["CRA 30","AUXILIAR","RONALD CHAVEZ","3150100197","","",""],
+  ["CRA 30","AUXILIAR","ANDRES CORREA","3138199722","","",""],
+  ["BOGOTÁ NORTE","AUXILIAR","JUAN LUNA","3016793477","2026-11-04","2026-11-20",""],
+  ["HIPER JAMAR","AUXILIAR","LEONDRO BALZA","3014275475","","",""],
+  ["EDEN","AUXILIAR","DANIEL OVALLE","3133515225","","",""],
+  ["EDEN","AUXILIAR","JONATHAN GUEVARA","3246104807","2026-06-20","2026-07-08",""],
+  ["RIOHACHA","AUXILIAR","NO HAY","","","",""],
+  ["PLAZUELA","AUXILIAR","NO HAY","","","",""],
+  ["PRINCIPAL","TÉCNICO","CARLOS GONZALEZ","","","",""],
+  ["HIPER","TÉCNICO","YIRMAN LADEO","","2026-03-27","2026-04-15",""],
+  ["NORTE","TÉCNICO","LEANDRO MADRID","","","",""],
+  ["TRINITARIAS","TÉCNICO","MARLON TOLEDO","","","",""],
+  ["SANTA MARTA","TÉCNICO","YESID BLANCO","","","",""],
+  ["SAN FELIPE","TÉCNICO","ANGEL VEGA 50%","","","",""],
+  ["PLAZUELA","TÉCNICO","SIN TECNICO","","","",""],
+  ["MONTERIA","TÉCNICO","JOSE CAMPO","","","",""],
+  ["VALLEDUPAR","TÉCNICO","ESTEBAN SILVERA","","","",""],
+  ["SINCELEJO","TÉCNICO","SIN TECNICO","","","",""],
+  ["RIOHACHA","TÉCNICO","DAVINSON MELO","","","",""],
+  ["CACIQUE","TÉCNICO","ARNULFO MENDEZ","","","",""],
+  ["MAYORCA","TÉCNICO","SIN TECNICO","","","",""],
+  ["MOLINOS","TÉCNICO","EDWARD MONTOYA","","","",""],
+  ["FLORIDA","TÉCNICO","SIN TECNICO","","","",""],
+  ["FABRICATO","TÉCNICO","SIN TECNICO","","","",""],
+  ["AMERICAS","TÉCNICO","OSCAR PABON","","","",""],
+  ["BOGOTA NORTE","TÉCNICO","JUAN RESTREPO","","","",""],
+  ["EDEN","TÉCNICO","KEVIN NICANOR","","","",""],
+  ["CRA 30","TÉCNICO","SIN TECNICO","","","",""],
+  ["VALLEDUPAR","COORDINADOR","MIGUEL SUAREZ GAMEZ","","","",""],
+  ["MONTERIA","COORDINADOR","ARNOLD JULIO","","","",""],
+  ["SINCELEJO","COORDINADOR","YORLAN CARMONA","","","",""],
+  ["4VIENTOS","COORDINADOR","HENRY VERGARA","","2026-05-11","2026-05-27",""],
+  ["MAYORCA","COORDINADOR","WILLIAM CEBALLOS","","","",""],
+  ["NORTE","COORDINADOR","MILTON MERCADO","","","",""],
+  ["AMERICAS","COORDINADOR","ALVARO GUTIERREZ","","2026-05-12","2026-06-10","","INCAPACIDAD"],
+  ["BOGOTA NORTE","COORDINADOR","MIGUEL BUITRAGO","","2026-06-09","2026-06-26",""],
+  ["FABRICATO","COORDINADOR","OSCAR RODRIGUEZ","","2026-05-02","2026-05-21",""],
+  ["FLORIDA","COORDINADOR","MIJAIL ALVAREZ","","","",""],
+  ["RIOHACHA","COORDINADOR","ORLANDO FUENTES","","","",""],
+  ["PLAZUELA","COORDINADOR","EFRAIN BARRIOS","","","",""],
+  ["EDEN","COORDINADOR","CAMILO LEON","","2026-03-20","2026-04-09",""],
+  ["SANTA MARTA","COORDINADOR","JESUS ORTIZ","","2026-05-15","2026-06-02","Jair Reyes"],
+  ["HIPER","COORDINADOR","CARLOS AVENDAÑO","","","",""],
+  ["MOLINOS","COORDINADOR","ANDRES ROJAS","","","",""],
+  ["CACIQUE","COORDINADOR","ALBERT SAUCEDO","","","",""],
+  ["PRINCIPAL","COORDINADOR","MARIANO LOZANO","","","",""],
+  ["SAN FELIPE","COORDINADOR","ELSY BARRIOS","","","",""],
+  ["CRA 30","COORDINADOR","DIEGO VALERO","","","",""]
+];
+
+let data = [];
+let currentMonth = new Date(); currentMonth.setDate(1);
+const today = new Date(); today.setHours(0,0,0,0);
+let editingEmpId = null;
+
+function loadData() {
+  try {
+    const saved = localStorage.getItem('jamar_vac_data_v5');
+    if (saved) {
+      data = JSON.parse(saved);
+      data.forEach(e => { if (!e.tipo) e.tipo = 'VACACIONES'; });
+      // AUTO-CLEAN: remove HENRY COORDINADOR duplicate (genuine HENRY is HENRY VERGARA)
+      data = data.filter(e => e.nombre !== 'HENRY COORDINADOR');
+      // AUTO-CLEAN: if name contains " INCAPACIDAD" suffix, strip it and set tipo
+      data.forEach(e => {
+        if (e.nombre && e.nombre.includes(' INCAPACIDAD')) {
+          e.nombre = e.nombre.replace(/\s*INCAPACIDAD\s*/g, '').trim();
+          e.tipo = 'INCAPACIDAD';
+        }
+      });
+      saveData();
+    } else {
+      // Try migrating from v4 then auto-clean
+      const v4 = localStorage.getItem('jamar_vac_data_v4');
+      if (v4) {
+        data = JSON.parse(v4);
+        data.forEach(e => { if (!e.tipo) e.tipo = 'VACACIONES'; });
+        // AUTO-CLEAN
+        data = data.filter(e => e.nombre !== 'HENRY COORDINADOR');
+        data.forEach(e => {
+          if (e.nombre && e.nombre.includes(' INCAPACIDAD')) {
+            e.nombre = e.nombre.replace(/\s*INCAPACIDAD\s*/g, '').trim();
+            e.tipo = 'INCAPACIDAD';
+          }
+        });
+      } else {
+        data = DEFAULT_DATA.map((r, i) => ({
+          id: 'emp_' + i, tienda: r[0], cargo: r[1], nombre: r[2],
+          celular: r[3], ini: r[4], fin: r[5], backup: r[6],
+          tipo: r[7] || 'VACACIONES'
+        }));
+      }
+      saveData();
+    }
+  } catch(e) {
+    data = DEFAULT_DATA.map((r, i) => ({
+      id: 'emp_' + i, tienda: r[0], cargo: r[1], nombre: r[2],
+      celular: r[3], ini: r[4], fin: r[5], backup: r[6],
+      tipo: r[7] || 'VACACIONES'
+    }));
+  }
+}
+
+function saveData() {
+  try { localStorage.setItem('jamar_vac_data_v5', JSON.stringify(data)); } catch(e) {}
+}
+
+function parseDate(s) {
+  if (!s || !s.trim()) return null;
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+
+function formatDate(d) {
+  if (!d) return '';
+  return d.toLocaleDateString('es-CO', {day:'2-digit', month:'short', year:'numeric'});
+}
+
+function dayDiff(a, b) {
+  return Math.round((b.getTime() - a.getTime()) / 86400000);
+}
+
+function computeDays(ini, fin) {
+  const i = parseDate(ini), f = parseDate(fin);
+  if (!i || !f) return 0;
+  return dayDiff(i, f) + 1;
+}
+
+function getStatus(emp) {
+  const ini = parseDate(emp.ini), fin = parseDate(emp.fin);
+  if (!ini || !fin) return { status: 'none', days: null };
+  if (today >= ini && today <= fin) return { status: 'red', days: 0 };
+  if (ini > today) {
+    const d = dayDiff(today, ini);
+    if (d < 5) return { status: 'amber', days: d };
+    if (d <= 10) return { status: 'green', days: d };
+    return { status: 'future', days: d };
+  }
+  return { status: 'past', days: null };
+}
+
+function statusOrder(s) {
+  return { red:0, amber:1, green:2, future:3, none:4, past:5 }[s] ?? 6;
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function updateStats() {
+  let red=0, amber=0, green=0;
+  data.forEach(e => {
+    const s = getStatus(e).status;
+    if (s === 'red') red++;
+    else if (s === 'amber') amber++;
+    else if (s === 'green') green++;
+  });
+  document.getElementById('s-total').textContent = data.length;
+  document.getElementById('s-red').textContent = red;
+  document.getElementById('s-amber').textContent = amber;
+  document.getElementById('s-green').textContent = green;
+}
+
+function updateTodayBanner() {
+  const onVac = data.filter(e => getStatus(e).status === 'red');
+  const banner = document.getElementById('today-banner');
+  if (onVac.length === 0) { banner.classList.add('hidden'); return; }
+  banner.classList.remove('hidden');
+  const vacCount = onVac.filter(e => (e.tipo||'VACACIONES') === 'VACACIONES').length;
+  const permCount = onVac.filter(e => e.tipo === 'PERMISO').length;
+  const incCount = onVac.filter(e => e.tipo === 'INCAPACIDAD').length;
+  const parts = [];
+  if (vacCount) parts.push(`${vacCount} vac.`);
+  if (permCount) parts.push(`${permCount} perm.`);
+  if (incCount) parts.push(`${incCount} incap.`);
+  let title;
+  if (parts.length > 1) {
+    title = `${onVac.length} persona${onVac.length>1?'s':''} con novedad hoy (${parts.join(' · ')})`;
+  } else if (incCount) {
+    title = `${incCount} persona${incCount>1?'s':''} en incapacidad hoy`;
+  } else if (permCount) {
+    title = `${permCount} persona${permCount>1?'s':''} en permiso hoy`;
+  } else {
+    title = `${vacCount} persona${vacCount>1?'s':''} de vacaciones hoy`;
+  }
+  document.getElementById('today-banner-title').textContent = title;
+  document.getElementById('today-banner-detail').textContent =
+    onVac.map(e => {
+      const icon = e.tipo === 'INCAPACIDAD' ? '🏥' : (e.tipo === 'PERMISO' ? '📝' : '🌴');
+      return `${icon} ${e.nombre} (${e.tienda})`;
+    }).join(' · ');
+}
+
+function renderAlerts() {
+  const tipoFilterEl = document.getElementById('fil-tipo');
+  const tipoF = tipoFilterEl ? tipoFilterEl.value : '';
+  const alerts = [];
+  data.forEach(e => {
+    if (tipoF && (e.tipo || 'VACACIONES') !== tipoF) return;
+    const s = getStatus(e);
+    if (s.status === 'red' || s.status === 'amber' || s.status === 'green') {
+      alerts.push({ emp: e, ...s });
+    }
+  });
+  alerts.sort((a,b) => {
+    const o = statusOrder(a.status) - statusOrder(b.status);
+    if (o !== 0) return o;
+    return (a.days || 0) - (b.days || 0);
+  });
+
+  const list = document.getElementById('alerts-list');
+  document.getElementById('alert-counter').textContent = alerts.length;
+
+  if (alerts.length === 0) {
+    list.innerHTML = '<div class="alert-empty">No hay alertas activas en este momento. 🌞</div>';
+    return;
+  }
+
+  list.innerHTML = alerts.map(a => {
+    const e = a.emp;
+    const isPermiso = (e.tipo === 'PERMISO');
+    const isIncap = (e.tipo === 'INCAPACIDAD');
+    let timeLabel = '';
+    if (a.status === 'red') {
+      const fin = parseDate(e.fin);
+      const daysLeft = dayDiff(today, fin);
+      timeLabel = daysLeft === 0 ? 'Último día' : `Faltan ${daysLeft}d`;
+    } else if (a.status === 'amber') {
+      timeLabel = a.days === 0 ? 'Mañana' : a.days === 1 ? 'En 1 día' : `En ${a.days} días`;
+    } else {
+      timeLabel = `En ${a.days} días`;
+    }
+    let headline;
+    if (a.status === 'red') {
+      headline = isIncap ? '🏥 EN INCAPACIDAD' : (isPermiso ? '📝 EN PERMISO' : '🌴 EN VACACIONES');
+    } else if (a.status === 'amber') {
+      headline = isIncap ? '⚠️ INCAPACIDAD INMINENTE' : (isPermiso ? '⚠️ PERMISO INMINENTE' : '⚠️ INMINENTE');
+    } else {
+      headline = isIncap ? '📅 INCAPACIDAD PRÓXIMA' : (isPermiso ? '📅 PERMISO PRÓXIMO' : '📅 PRÓXIMO');
+    }
+    let alertClass = a.status;
+    if (a.status === 'red') {
+      if (isIncap) alertClass = 'orange';
+      else if (isPermiso) alertClass = 'blue';
+    }
+    return `<div class="alert-item ${alertClass}">
+      <div class="alert-top">
+        <div>
+          <div class="alert-name">${e.nombre}</div>
+          <div style="font-size:10px; color:var(--gray-500); margin-top:2px; font-weight:600; letter-spacing:0.3px;">${headline}</div>
+        </div>
+        <div class="alert-time">${timeLabel}</div>
+      </div>
+      <div class="alert-meta">
+        <span>🏢 ${e.tienda}</span>
+        <span>👤 ${formatCargo(e.cargo)}</span>
+        ${tipoPill(e.tipo)}
+      </div>
+      <div class="alert-meta">
+        <span>📆 ${formatDate(parseDate(e.ini))} → ${formatDate(parseDate(e.fin))}</span>
+      </div>
+      ${e.backup ? `<div class="alert-meta"><span style="color:var(--gray-500)">🔄 Backup: ${e.backup}</span></div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function formatCargo(c) {
+  return c === 'COORDINADOR' ? 'Coordinador' : c === 'TÉCNICO' ? 'Técnico' : 'Auxiliar';
+}
+
+function cargoPill(c) {
+  if (c === 'COORDINADOR') return '<span class="cargo-pill coord">Coordinador</span>';
+  if (c === 'TÉCNICO') return '<span class="cargo-pill tec">Técnico</span>';
+  return '<span class="cargo-pill aux">Auxiliar</span>';
+}
+
+function statusBadge(s, tipo) {
+  const isPermiso = (tipo === 'PERMISO');
+  const isIncap = (tipo === 'INCAPACIDAD');
+  let redColor = 'red', redText = 'En curso';
+  if (isPermiso) { redColor = 'blue'; redText = 'En permiso'; }
+  else if (isIncap) { redColor = 'orange'; redText = 'En incapacidad'; }
+  if (s.status === 'red') return `<span class="badge ${redColor}"><span class="badge-dot"></span>${redText}</span>`;
+  if (s.status === 'amber') return `<span class="badge amber"><span class="badge-dot"></span>En ${s.days}d</span>`;
+  if (s.status === 'green') return `<span class="badge green"><span class="badge-dot"></span>En ${s.days}d</span>`;
+  if (s.status === 'future') return `<span class="badge gray"><span class="badge-dot"></span>En ${s.days}d</span>`;
+  if (s.status === 'past') return '<span class="badge gray"><span class="badge-dot"></span>Completadas</span>';
+  return '<span class="badge gray"><span class="badge-dot"></span>Sin fecha</span>';
+}
+
+function tipoPill(tipo) {
+  const t = tipo || 'VACACIONES';
+  if (t === 'PERMISO') return '<span class="tipo-pill permiso"><span class="tipo-dot"></span>📝 Permiso</span>';
+  if (t === 'INCAPACIDAD') return '<span class="tipo-pill incapacidad"><span class="tipo-dot"></span>🏥 Incapacidad</span>';
+  return '<span class="tipo-pill vacaciones"><span class="tipo-dot"></span>🌴 Vacación</span>';
+}
+
+function renderTable() {
+  const tipoF = document.getElementById('fil-tipo').value;
+  const cargoF = document.getElementById('fil-cargo').value;
+  const tiendaF = document.getElementById('fil-tienda').value;
+  const estadoF = document.getElementById('fil-estado').value;
+  const searchF = document.getElementById('fil-search').value.toLowerCase().trim();
+
+  let filtered = data.map(e => ({ ...e, _s: getStatus(e) }));
+  filtered = filtered.filter(e => {
+    if (tipoF && (e.tipo || 'VACACIONES') !== tipoF) return false;
+    if (cargoF && e.cargo !== cargoF) return false;
+    if (tiendaF && e.tienda !== tiendaF) return false;
+    if (estadoF && e._s.status !== estadoF) return false;
+    if (searchF) {
+      const hay = (e.nombre + ' ' + e.tienda + ' ' + (e.backup||'')).toLowerCase();
+      if (!hay.includes(searchF)) return false;
+    }
+    return true;
+  });
+  filtered.sort((a,b) => statusOrder(a._s.status) - statusOrder(b._s.status));
+
+  const tbody = document.getElementById('tbody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="10">No hay resultados para los filtros seleccionados</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(e => {
+    const s = e._s;
+    const rowClass = s.status === 'red' ? 'row-red' : s.status === 'amber' ? 'row-amber' : s.status === 'green' ? 'row-green' : '';
+    const ini = parseDate(e.ini), fin = parseDate(e.fin);
+    const dias = computeDays(e.ini, e.fin);
+    const iniDisplay = ini ? formatDate(ini) : 'Sin fecha';
+    const finDisplay = fin ? formatDate(fin) : 'Sin fecha';
+    const iniClass = ini ? 'date-cell' : 'date-cell empty';
+    const finClass = fin ? 'date-cell' : 'date-cell empty';
+    return `<tr class="${rowClass}">
+      <td>${tipoPill(e.tipo)}</td>
+      <td style="font-weight:500">${e.tienda}</td>
+      <td>${cargoPill(e.cargo)}</td>
+      <td style="font-weight:500">${e.nombre}</td>
+      <td><span class="${iniClass}" onclick="openDateEditor(event, '${e.id}')">${iniDisplay}</span></td>
+      <td><span class="${finClass}" onclick="openDateEditor(event, '${e.id}')">${finDisplay}</span></td>
+      <td style="text-align:center; font-weight:600">${dias > 0 ? dias : '—'}</td>
+      <td>${statusBadge(s, e.tipo)}</td>
+      <td style="color:var(--gray-500); font-size:12px">${e.backup || '—'}</td>
+      <td>
+        <div class="row-actions">
+          <button class="action-btn" onclick="editEmployee('${e.id}')" title="Editar todo">✏️</button>
+          <button class="action-btn delete" onclick="deleteEmployee('${e.id}')" title="Eliminar">🗑️</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+}
+
+function populateFilters() {
+  const cargoSel = document.getElementById('fil-cargo');
+  const tiendaSel = document.getElementById('fil-tienda');
+  const tiendasList = document.getElementById('tiendas-list');
+  const currCargo = cargoSel.value, currTienda = tiendaSel.value;
+
+  const cargos = [...new Set(data.map(e => e.cargo))].sort();
+  cargoSel.innerHTML = '<option value="">Todos los cargos</option>' +
+    cargos.map(c => `<option value="${c}" ${c===currCargo?'selected':''}>${formatCargo(c)}</option>`).join('');
+
+  const tiendas = [...new Set(data.map(e => e.tienda))].sort();
+  tiendaSel.innerHTML = '<option value="">Todas las tiendas</option>' +
+    tiendas.map(t => `<option value="${t}" ${t===currTienda?'selected':''}>${t}</option>`).join('');
+  tiendasList.innerHTML = tiendas.map(t => `<option value="${t}">`).join('');
+}
+
+// ============ CALENDAR ============
+function renderCalendar() {
+  const year = currentMonth.getFullYear();
+  const month = currentMonth.getMonth();
+  document.getElementById('cal-title').textContent =
+    currentMonth.toLocaleDateString('es-CO', { month:'long', year:'numeric' });
+
+  const firstDay = new Date(year, month, 1);
+  let startDay = firstDay.getDay() - 1;
+  if (startDay < 0) startDay = 6;
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  const cells = [];
+  for (let i = startDay; i > 0; i--) {
+    cells.push({ date: new Date(year, month-1, daysInPrevMonth - i + 1), otherMonth: true });
+  }
+  for (let i = 1; i <= daysInMonth; i++) {
+    cells.push({ date: new Date(year, month, i), otherMonth: false });
+  }
+  while (cells.length < 42) {
+    const last = cells[cells.length-1].date;
+    cells.push({ date: new Date(last.getFullYear(), last.getMonth(), last.getDate()+1), otherMonth: true });
+  }
+  cells.length = 42;
+
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = cells.map(c => {
+    const events = getEventsForDay(c.date);
+    const isToday = c.date.getTime() === today.getTime();
+    const classes = ['cal-day'];
+    if (c.otherMonth) classes.push('other-month');
+    if (isToday) classes.push('today');
+
+    // Sort events so RED appears first, then AMBER, GREEN, FUTURE, PAST
+    const order = { red: 0, amber: 1, green: 2, future: 3, past: 4, gray: 5 };
+    events.sort((a, b) => (order[a.level] ?? 9) - (order[b.level] ?? 9));
+
+    let evHtml = '';
+    const maxShow = 3;
+    events.slice(0, maxShow).forEach(ev => {
+      evHtml += `<div class="day-event ${ev.cls}" title="${ev.title}">${ev.label}</div>`;
+    });
+    if (events.length > maxShow) {
+      evHtml += `<div class="day-more">+${events.length - maxShow} más</div>`;
+    }
+    return `<div class="${classes.join(' ')}" onclick="openDayDetails('${c.date.toISOString()}')">
+      <div class="day-num">${c.date.getDate()}</div>
+      <div class="day-events">${evHtml}</div>
+    </div>`;
+  }).join('');
+}
+
+function getEventsForDay(date) {
+  // ONE event per person/day. Color = (tipo) + (semáforo level computed from TODAY).
+  const events = [];
+  const dTs = date.getTime();
+  const todayTs = today.getTime();
+  const tipoFilterEl = document.getElementById('fil-tipo');
+  const tipoF = tipoFilterEl ? tipoFilterEl.value : '';
+
+  data.forEach(e => {
+    const tipo = e.tipo || 'VACACIONES';
+    if (tipoF && tipo !== tipoF) return;
+
+    const ini = parseDate(e.ini), fin = parseDate(e.fin);
+    if (!ini || !fin) return;
+    const iniTs = ini.getTime();
+    const finTs = fin.getTime();
+    if (dTs < iniTs || dTs > finTs) return;
+
+    let level = 'gray';
+    if (todayTs >= iniTs && todayTs <= finTs) level = 'red';
+    else if (iniTs > todayTs) {
+      const diff = Math.round((iniTs - todayTs) / 86400000);
+      if (diff < 5) level = 'amber';
+      else if (diff <= 10) level = 'green';
+      else level = 'future';
+    } else level = 'past';
+
+    const first = e.nombre.split(' ')[0];
+    let label = first;
+    if (dTs === iniTs) label = '▶ ' + first;
+    else if (dTs === finTs) label = '■ ' + first;
+
+    const isStart = (dTs === iniTs);
+    const isEnd = (dTs === finTs);
+    const isPermiso = (tipo === 'PERMISO');
+    const isIncap = (tipo === 'INCAPACIDAD');
+    let cls;
+    if (isIncap) {
+      if (level === 'red') cls = isStart ? 'inc-start' : (isEnd ? 'inc-end' : 'inc-mid');
+      else if (level === 'amber') cls = 'inc-amber';
+      else if (level === 'green') cls = 'inc-green';
+      else if (level === 'future') cls = 'inc-future';
+      else cls = 'inc-past';
+    } else if (isPermiso) {
+      if (level === 'red') cls = isStart ? 'perm-start' : (isEnd ? 'perm-end' : 'perm-mid');
+      else if (level === 'amber') cls = 'perm-amber';
+      else if (level === 'green') cls = 'perm-green';
+      else if (level === 'future') cls = 'perm-future';
+      else cls = 'perm-past';
+    } else {
+      if (level === 'red') cls = isStart ? 'vac-start' : (isEnd ? 'vac-end' : 'vac-mid');
+      else if (level === 'amber') cls = 'up-amber';
+      else if (level === 'green') cls = 'up-green';
+      else if (level === 'future') cls = 'vac-future';
+      else cls = 'vac-past';
+    }
+
+    const tipoLabel = isIncap ? '🏥 INCAPACIDAD' : (isPermiso ? '📝 PERMISO' : '🌴 VACACIONES');
+    events.push({
+      cls, label, level, tipo,
+      title: `${tipoLabel} — ${e.nombre} — ${e.tienda} (${formatDate(ini)} → ${formatDate(fin)})`
+    });
+  });
+  return events;
+}
+
+function prevMonth() { currentMonth.setMonth(currentMonth.getMonth() - 1); renderCalendar(); }
+function nextMonth() { currentMonth.setMonth(currentMonth.getMonth() + 1); renderCalendar(); }
+function goToToday() { currentMonth = new Date(); currentMonth.setDate(1); renderCalendar(); }
+
+function openDayDetails(iso) {
+  const date = new Date(iso);
+  const events = data.filter(e => {
+    const ini = parseDate(e.ini), fin = parseDate(e.fin);
+    if (!ini || !fin) return false;
+    return date.getTime() >= ini.getTime() && date.getTime() <= fin.getTime();
+  });
+  if (events.length === 0) {
+    showToast(`📅 ${formatDate(date)} — Sin vacaciones programadas`);
+  } else {
+    const names = events.map(e => `${e.nombre} (${e.tienda})`).join(', ');
+    showToast(`📅 ${formatDate(date)}: ${events.length} persona(s) — ${names}`);
+  }
+}
+
+// ============ INLINE DATE EDITOR ============
+function openDateEditor(ev, empId) {
+  ev.stopPropagation();
+  const emp = data.find(x => x.id === empId);
+  if (!emp) return;
+  editingEmpId = empId;
+
+  document.getElementById('pop-name').textContent = emp.nombre;
+  document.getElementById('pop-meta').textContent = `${emp.tienda} · ${formatCargo(emp.cargo)}`;
+  document.getElementById('pop-tipo').value = emp.tipo || 'VACACIONES';
+  document.getElementById('pop-ini').value = emp.ini || '';
+  document.getElementById('pop-fin').value = emp.fin || '';
+  updatePopDays();
+
+  const popover = document.getElementById('date-popover');
+  const backdrop = document.getElementById('pop-backdrop');
+  popover.classList.add('active');
+  backdrop.classList.add('active');
+
+  // Position popover near the click
+  const rect = ev.target.getBoundingClientRect();
+  let top = rect.bottom + 8;
+  let left = rect.left;
+  // Adjust if off-screen
+  if (left + 360 > window.innerWidth) left = window.innerWidth - 380;
+  if (top + 280 > window.innerHeight) top = rect.top - 290;
+  if (left < 10) left = 10;
+  if (top < 10) top = 10;
+  popover.style.top = top + 'px';
+  popover.style.left = left + 'px';
+}
+
+function updatePopDays() {
+  const ini = document.getElementById('pop-ini').value;
+  const fin = document.getElementById('pop-fin').value;
+  const dias = computeDays(ini, fin);
+  document.getElementById('pop-days').textContent = dias > 0 ? `${dias} día${dias>1?'s':''}` : '—';
+}
+
+document.getElementById('pop-ini').addEventListener('change', updatePopDays);
+document.getElementById('pop-fin').addEventListener('change', updatePopDays);
+
+function clearDatesInPopover() {
+  document.getElementById('pop-ini').value = '';
+  document.getElementById('pop-fin').value = '';
+  updatePopDays();
+}
+
+function saveDatesFromPopover() {
+  if (!editingEmpId) return;
+  const emp = data.find(x => x.id === editingEmpId);
+  if (!emp) return;
+  const ini = document.getElementById('pop-ini').value;
+  const fin = document.getElementById('pop-fin').value;
+  const tipo = document.getElementById('pop-tipo').value;
+  if (ini && fin && parseDate(ini) > parseDate(fin)) {
+    alert('La fecha de inicio no puede ser mayor a la fecha de fin');
+    return;
+  }
+  emp.ini = ini;
+  emp.fin = fin;
+  emp.tipo = tipo;
+  saveData();
+  closePopover();
+  refreshAll();
+  const label = tipo === 'PERMISO' ? 'Permiso' : (tipo === 'INCAPACIDAD' ? 'Incapacidad' : 'Vacaciones');
+  showToast(`✓ ${label} actualizado para ${emp.nombre}`);
+}
+
+function closePopover() {
+  document.getElementById('date-popover').classList.remove('active');
+  document.getElementById('pop-backdrop').classList.remove('active');
+  editingEmpId = null;
+}
+
+// ============ CRUD ============
+function openModal(id = null) {
+  document.getElementById('modal').classList.add('active');
+  if (id) {
+    const e = data.find(x => x.id === id);
+    if (!e) return;
+    document.getElementById('modal-title').textContent = 'Editar empleado';
+    document.getElementById('f-id').value = e.id;
+    document.getElementById('f-tipo').value = e.tipo || 'VACACIONES';
+    document.getElementById('f-nombre').value = e.nombre;
+    document.getElementById('f-tienda').value = e.tienda;
+    document.getElementById('f-cargo').value = e.cargo;
+    document.getElementById('f-ini').value = e.ini || '';
+    document.getElementById('f-fin').value = e.fin || '';
+    document.getElementById('f-backup').value = e.backup || '';
+    document.getElementById('f-cel').value = e.celular || '';
+  } else {
+    document.getElementById('modal-title').textContent = 'Agregar empleado';
+    document.getElementById('emp-form').reset();
+    document.getElementById('f-id').value = '';
+    document.getElementById('f-tipo').value = 'VACACIONES';
+  }
+}
+
+function closeModal() { document.getElementById('modal').classList.remove('active'); }
+function editEmployee(id) { openModal(id); }
+
+function deleteEmployee(id) {
+  const e = data.find(x => x.id === id);
+  if (!e) return;
+  if (!confirm(`¿Eliminar a ${e.nombre} de ${e.tienda}?`)) return;
+  data = data.filter(x => x.id !== id);
+  saveData();
+  refreshAll();
+  showToast('🗑️ Empleado eliminado');
+}
+
+function saveEmployee(ev) {
+  ev.preventDefault();
+  const id = document.getElementById('f-id').value;
+  const obj = {
+    tipo: document.getElementById('f-tipo').value || 'VACACIONES',
+    nombre: document.getElementById('f-nombre').value.trim().toUpperCase(),
+    tienda: document.getElementById('f-tienda').value.trim().toUpperCase(),
+    cargo: document.getElementById('f-cargo').value,
+    ini: document.getElementById('f-ini').value || '',
+    fin: document.getElementById('f-fin').value || '',
+    backup: document.getElementById('f-backup').value.trim(),
+    celular: document.getElementById('f-cel').value.trim()
+  };
+  if (obj.ini && obj.fin && parseDate(obj.ini) > parseDate(obj.fin)) {
+    alert('La fecha de inicio no puede ser mayor a la fecha de fin');
+    return;
+  }
+  if (id) {
+    const idx = data.findIndex(x => x.id === id);
+    if (idx >= 0) data[idx] = { ...data[idx], ...obj };
+    showToast('✓ Empleado actualizado');
+  } else {
+    obj.id = 'emp_' + Date.now();
+    data.push(obj);
+    showToast('✓ Empleado agregado');
+  }
+  saveData();
+  closeModal();
+  refreshAll();
+}
+
+function exportData() {
+  const choice = prompt('¿En qué formato exportar?\n\n1 = Excel (.xlsx)\n2 = JSON\n3 = CSV\n\nEscribe 1, 2 o 3:', '1');
+  if (!choice) return;
+  const date = new Date().toISOString().slice(0,10);
+  
+  const exportRows = data.map(e => ({
+    'TIPO': e.tipo || 'VACACIONES',
+    'TIENDA': e.tienda,
+    'CARGO': e.cargo,
+    'NOMBRE': e.nombre,
+    'CELULAR': e.celular || '',
+    'Fecha Inicio': e.ini || '',
+    'Fecha Fin': e.fin || '',
+    '# Días': computeDays(e.ini, e.fin) || '',
+    'Backup': e.backup || ''
+  }));
+  
+  if (choice === '1') {
+    const ws = XLSX.utils.json_to_sheet(exportRows);
+    // Set column widths
+    ws['!cols'] = [
+      {wch: 20}, {wch: 14}, {wch: 28}, {wch: 14},
+      {wch: 22}, {wch: 22}, {wch: 14}, {wch: 18}
+    ];
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Vacaciones');
+    XLSX.writeFile(wb, `jamar-vacaciones-${date}.xlsx`);
+    showToast('📥 Exportado como Excel');
+  } else if (choice === '2') {
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `jamar-vacaciones-${date}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📥 Exportado como JSON');
+  } else if (choice === '3') {
+    const ws = XLSX.utils.json_to_sheet(exportRows);
+    const csv = XLSX.utils.sheet_to_csv(ws);
+    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `jamar-vacaciones-${date}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('📥 Exportado como CSV');
+  }
+}
+
+function parseDateFromExcel(val) {
+  if (!val) return '';
+  if (val instanceof Date) {
+    const y = val.getFullYear();
+    const m = String(val.getMonth()+1).padStart(2,'0');
+    const d = String(val.getDate()).padStart(2,'0');
+    return `${y}-${m}-${d}`;
+  }
+  const s = String(val).trim();
+  if (!s) return '';
+  // dd/mm/yyyy or dd-mm-yyyy or dd/mm/yy
+  let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})$/);
+  if (m) {
+    let y = parseInt(m[3]);
+    if (y < 100) y += 2000;
+    return `${y}-${String(parseInt(m[2])).padStart(2,'0')}-${String(parseInt(m[1])).padStart(2,'0')}`;
+  }
+  // yyyy-mm-dd
+  m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (m) return `${m[1]}-${String(parseInt(m[2])).padStart(2,'0')}-${String(parseInt(m[3])).padStart(2,'0')}`;
+  // Excel serial number (just in case raw)
+  const n = parseFloat(s);
+  if (!isNaN(n) && n > 1000 && n < 100000) {
+    const d = new Date(Math.round((n - 25569) * 86400 * 1000));
+    return parseDateFromExcel(d);
+  }
+  return '';
+}
+
+function normalizeCargo(c) {
+  const s = (c||'').toString().toUpperCase().trim();
+  if (s.includes('COORD')) return 'COORDINADOR';
+  if (s.includes('TÉC') || s.includes('TEC')) return 'TÉCNICO';
+  if (s.includes('AUX')) return 'AUXILIAR';
+  return s || 'AUXILIAR';
+}
+
+function processImportedRows(rows) {
+  // Find header row
+  let headerIdx = -1;
+  for (let i = 0; i < Math.min(rows.length, 10); i++) {
+    const r = (rows[i] || []).map(x => String(x||'').toUpperCase());
+    if (r.some(c => c.includes('TIENDA')) && r.some(c => c.includes('NOMBRE'))) {
+      headerIdx = i; break;
+    }
+  }
+  if (headerIdx < 0) {
+    alert('No se encontró una fila de encabezado válida.\nDebe tener columnas: TIENDA, CARGO, NOMBRE, Fecha Inicio, Fecha Fin, Backup');
+    return null;
+  }
+  const headers = rows[headerIdx].map(x => String(x||'').toUpperCase().trim());
+  const colIdx = {
+    tipo: headers.findIndex(h => h === 'TIPO' || h.includes('NOVEDAD')),
+    tienda: headers.findIndex(h => h.includes('TIENDA')),
+    cargo: headers.findIndex(h => h.includes('CARGO')),
+    nombre: headers.findIndex(h => h.includes('NOMBRE')),
+    cel: headers.findIndex(h => h.includes('CEL') || h.includes('TELE')),
+    ini: headers.findIndex(h => h.includes('INICIO') || (h.includes('FECHA') && h.includes('INI'))),
+    fin: headers.findIndex(h => h.includes('FIN')),
+    backup: headers.findIndex(h => h.includes('BACKUP') || h.includes('REEMP'))
+  };
+  
+  const imported = [];
+  for (let i = headerIdx + 1; i < rows.length; i++) {
+    const r = rows[i];
+    if (!r || r.length === 0) continue;
+    const nombre = String(r[colIdx.nombre] || '').trim();
+    const tienda = String(r[colIdx.tienda] || '').trim();
+    if (!nombre || !tienda) continue;
+    let tipoVal = 'VACACIONES';
+    if (colIdx.tipo >= 0) {
+      const raw = String(r[colIdx.tipo] || '').toUpperCase().trim();
+      if (raw.includes('INCAPAC')) tipoVal = 'INCAPACIDAD';
+      else if (raw.includes('PERMIS')) tipoVal = 'PERMISO';
+      else if (raw.includes('VACACI')) tipoVal = 'VACACIONES';
+    }
+    imported.push({
+      id: 'emp_' + Date.now() + '_' + i,
+      tipo: tipoVal,
+      tienda: tienda.toUpperCase(),
+      cargo: normalizeCargo(r[colIdx.cargo]),
+      nombre: nombre.toUpperCase(),
+      celular: colIdx.cel >= 0 ? String(r[colIdx.cel] || '').trim() : '',
+      ini: colIdx.ini >= 0 ? parseDateFromExcel(r[colIdx.ini]) : '',
+      fin: colIdx.fin >= 0 ? parseDateFromExcel(r[colIdx.fin]) : '',
+      backup: colIdx.backup >= 0 ? String(r[colIdx.backup] || '').trim() : ''
+    });
+  }
+  return imported;
+}
+
+function importData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.xlsx,.xls,.csv,.json,application/json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv';
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const name = file.name.toLowerCase();
+    const reader = new FileReader();
+    
+    if (name.endsWith('.json')) {
+      reader.onload = (ev) => {
+        try {
+          const imported = JSON.parse(ev.target.result);
+          if (!Array.isArray(imported)) throw new Error('Formato inválido');
+          confirmImport(imported);
+        } catch(err) { alert('Error al importar JSON: ' + err.message); }
+      };
+      reader.readAsText(file);
+    } else if (name.endsWith('.csv')) {
+      reader.onload = (ev) => {
+        try {
+          const text = ev.target.result;
+          const wb = XLSX.read(text, { type: 'string', cellDates: true });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          const rows = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, dateNF: 'yyyy-mm-dd' });
+          const imported = processImportedRows(rows);
+          if (imported) confirmImport(imported);
+        } catch(err) { alert('Error al importar CSV: ' + err.message); }
+      };
+      reader.readAsText(file);
+    } else {
+      // Excel
+      reader.onload = (ev) => {
+        try {
+          const dataArr = new Uint8Array(ev.target.result);
+          const wb = XLSX.read(dataArr, { type: 'array', cellDates: true });
+          const ws = wb.Sheets[wb.SheetNames[0]];
+          const rows = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false, dateNF: 'yyyy-mm-dd' });
+          const imported = processImportedRows(rows);
+          if (imported) confirmImport(imported);
+        } catch(err) { alert('Error al importar Excel: ' + err.message); }
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  };
+  input.click();
+}
+
+function confirmImport(imported) {
+  if (imported.length === 0) {
+    alert('No se encontraron registros válidos en el archivo.');
+    return;
+  }
+  const msg = `Se encontraron ${imported.length} registros válidos.\n\n¿Cómo deseas importarlos?\n\n` +
+              `• Aceptar: REEMPLAZAR todos los datos actuales (${data.length} registros se borrarán)\n` +
+              `• Cancelar: AGREGAR los nuevos registros a la base actual`;
+  if (confirm(msg)) {
+    data = imported;
+    showToast(`✓ ${imported.length} registros importados (reemplazo)`);
+  } else {
+    data = data.concat(imported);
+    showToast(`✓ ${imported.length} registros agregados`);
+  }
+  saveData();
+  refreshAll();
+}
+
+function refreshAll() {
+  updateStats();
+  updateTodayBanner();
+  populateFilters();
+  renderTable();
+  renderCalendar();
+  renderAlerts();
+}
+
+document.getElementById('today-lbl').textContent =
+  today.toLocaleDateString('es-CO', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+['fil-tipo','fil-cargo','fil-tienda','fil-estado','fil-search'].forEach(id => {
+  document.getElementById(id).addEventListener('input', () => {
+    renderTable();
+    renderCalendar();
+    renderAlerts();
+  });
+  document.getElementById(id).addEventListener('change', () => {
+    renderTable();
+    renderCalendar();
+    renderAlerts();
+  });
+});
+
+document.getElementById('modal').addEventListener('click', (e) => {
+  if (e.target.id === 'modal') closeModal();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closePopover();
+    closeModal();
+  }
+});
+
+// Auto-carga del data.json — fuente de verdad compartida.
+// Se intenta primero por ruta relativa (GitHub Pages, la más confiable y sin caché),
+// y como respaldo por raw.githubusercontent (por si se abre fuera de Pages).
+const DATA_SOURCES = [
+  './data.json',
+  'https://raw.githubusercontent.com/mariangelm0304/VACACIONES/main/data.json',
+  'https://raw.githubusercontent.com/mariangelm0304/VACACIONES/master/data.json'
+];
+let ghLastHash = null;
+
+async function loadFromGitHub(silent) {
+  for (const src of DATA_SOURCES) {
+    try {
+      const res = await fetch(src + '?t=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) continue;
+      const json = await res.json();
+      if (!Array.isArray(json)) continue;
+      json.forEach(e => { if (!e.tipo) e.tipo = 'VACACIONES'; });
+      data = json;
+      saveData();
+      ghLastHash = JSON.stringify(data);
+      if (!silent) refreshAll();
+      return true;
+    } catch(e) { /* intenta la siguiente fuente */ }
+  }
+  return false;
+}
+
+async function initAndPoll() {
+  const ok = await loadFromGitHub(false);
+  if (!ok) { loadData(); refreshAll(); }
+
+  // Polling cada 30s — si cambia el JSON en GitHub, actualiza automáticamente
+  setInterval(async () => {
+    const res = await loadFromGitHub(true);
+    if (res) {
+      const newHash = JSON.stringify(data);
+      if (newHash !== ghLastHash) {
+        ghLastHash = newHash;
+        refreshAll();
+        showToast('✅ Datos actualizados desde GitHub');
+      }
+    }
+    // Chequeo de cambio de día
+    const now = new Date(); now.setHours(0,0,0,0);
+    if (now.getTime() !== today.getTime()) {
+      today.setTime(now.getTime());
+      refreshAll();
+    }
+  }, 30000);
+}
+
+initAndPoll();
+</script>
+
+</body></html>
